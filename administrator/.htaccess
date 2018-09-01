@@ -1,0 +1,6 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^portal\.justbornindia\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.portal\.justbornindia\.com$
+RewriteRule ^/?$ "http\:\/\/justbornindia\.com\/backend\/" [R=301,L]
+
