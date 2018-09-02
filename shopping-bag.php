@@ -118,7 +118,7 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 					<input type="text" name="total_bill_amount" id="total_bill_amount" readonly="" value="<?php echo $total_bill_amount; ?>">
 				</div>
 				<div class="ibox-row">
-					<label>Billling Address</label>
+					<label>Billing Address</label>
 					<div class="input-holder">
 						<input type="text" name="billing_address" readonly="" value="<?php echo strip_tags($customer_address);?>">
 						<a class="edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -136,14 +136,9 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 				<div class="courier-con">
 					<h5>Preferred courier service | Please Specify</h5>
 					<ul>
+ 
 						<li>
-							<input class="c-radio" type="radio" id="safepress" name="radio-group" checked="" value="Safepress" autocomplete="off"><label for="safepress">Safepress</label>
-						</li>
-						<li>
-							<input class="c-radio" type="radio" id="gati" name="radio-group" value="Gati" autocomplete="off"><label for="gati">Gati</label>
-						</li>
-						<li>
-							<input class="c-radio" type="radio" id="other-opt" name="radio-group" value="other-cour" autocomplete="off"><label for="other-opt">Others</label>
+							<input class="c-radio"    type="radio" id="other-opt" name="radio-group" value="other-cour" autocomplete="off"><label for="other-opt">Remarks</label>
 							<input id="other-inp" type="text" name="other_corier">
 						</li>
 					</ul>

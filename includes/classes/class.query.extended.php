@@ -155,6 +155,27 @@ class db {
 	   * $db->select($qryArray);
 	   * $db->result();
 */
+	public function truncate($queryString) {
+	try {
+  
+  $truncate_tables =$this->pdo->prepare($queryString);
+  $truncate_tables->execute();
+} catch(PDOException $e){
+  echo $e->getMessage();
+} 
+}
+
+	public function executequery($queryString) {
+	try {
+  
+  $truncate_tables =$this->pdo->prepare($queryString);
+  $truncate_tables->execute();
+} catch(PDOException $e){
+  echo $e->getMessage();
+} 
+}
+
+
 	public function query($queryString, $method = PDO::FETCH_OBJ) {
 
 		try {
@@ -472,7 +493,7 @@ class db {
 	 * Get the list of tables
 	 * @uses Private use
 	 */
-	private function getTables() {
+	public function getTables() {
 		try {
 			$stmt = $this->pdo->query('SHOW TABLES');
 			$tbs = $stmt->fetchAll();
@@ -502,6 +523,63 @@ class db {
 			}
 		}
 	}
+
+	/**
+	*
+	* create table
+	* @uses public use
+	*/
+	    public function createTable($create_tbl='',$like_table) {
+	try{
+	
+		$cQry=$this->pdo->exec("CREATE TABLE ".$create_tbl."  LIKE ".$like_table."");
+		$cQry=$this->pdo->exec("INSERT INTO ".$create_tbl." SELECT * FROM ".$like_table." ");
+ 
+/*		if ($cQry->rowCount() > 0) {
+				return $duplicate = true;
+			} else {
+				return $duplicate = false;
+			}*/
+	
+	//$r = $this->pdo->exec($create_tbl);
+ 	//return $this->pdo->exec($create_tbl);
+ 
+	} catch (PDOException $e){
+				if ($this->DiplayErrorsEndUser == true) {
+
+				echo $this->dbErrorMsg . $e->getMessage();
+				exit();
+
+			} else {
+
+				$this->error[] = $e->getMessage();
+				return false;
+
+			}
+    }
+}
+
+
+	    public function createview($exy) {
+	try{
+	
+		$cQry=$this->pdo->exec($exy);
+ 
+ 
+	} catch (PDOException $e){
+				if ($this->DiplayErrorsEndUser == true) {
+
+				echo $this->dbErrorMsg . $e->getMessage();
+				exit();
+
+			} else {
+
+				$this->error[] = $e->getMessage();
+				return false;
+
+			}
+    }
+}
 
 	/**
 	 *

@@ -99,13 +99,36 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 							</div>
 
-							<div class="ibox-row">
+							 <div class="ibox-row">
 
-								<label class="hidden-xs">&nbsp;</label>
+							<label>Billing City</label>
 
-								<input type="text" name="">
+							<input type="text" name="customer_address1" value="<?php echo $customer_array[0]["customer_address"]; ?>">
+
+						</div>
+
+							 <div class="ibox-row">
+
+								<label>Billing State</label>
+
+								<input type="text" name="customer_address1" value="<?php echo $customer_array[0]["customer_address"]; ?>">
 
 							</div>
+														 <div class="ibox-row">
+
+								<label>Billing PIN</label>
+
+								<input type="text" name="customer_address1" value="<?php echo $customer_array[0]["customer_address"]; ?>">
+
+							</div>
+
+					<!-- 		<div class="ibox-row">
+					
+						<label class="hidden-xs">&nbsp;</label>
+					
+						<input type="text" name="">
+					
+					</div> -->
 
 							<div class="ibox-row">
 
