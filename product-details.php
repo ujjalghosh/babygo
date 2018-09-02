@@ -13,15 +13,15 @@ $images=$Product->product_display($db->tbl_pre . "product_images_tbl", array(), 
     $response["product"]["images"] = array();
 
 $product = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE product_id ='".$product_id."'  " );
-$group_id = $product[0]['group_id']; 
+  $group_id = $product[0]['group_id']; 
 $num_of_view=$product[0]["num_of_view"]+1;
 $name_value = array( 'num_of_view' => rep($num_of_view) );
 
 $order_confirm = $db->update('product_tbl', $name_value, "product_id='" . $product_id . "'   ");
-$related=$Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE group_id ='".$group_id."' and product_status='Active' " );
+$related=$Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE group_id IN(".$group_id.") and product_status='Active' " );
 
 $details=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " . $db->tbl_pre . "product_size_tbl sz ", array(), "WHERE pdt.product_id ='".$product_id."' and sz.product_size_id=pdt.size_id " );
-//print_r($related);
+//print_r($details);
  $other_color= $Product->product_display($db->tbl_pre . "color_image_tbl", array(), "WHERE product_id ='".$product_id."' " );
 
 } else {
@@ -119,7 +119,7 @@ exit(header('location: sign-in.php'));
 
 						        <td><span id="set_piece_<?php echo $i; ?>"><?php echo $details[$i]["style_set_qty"]; ?></span></td>
 
-						        <td><?php echo $details[$i]["style_mrp_for_size"]; ?></td>
+						        <td><?php echo amount_format_in($details[$i]["style_mrp_for_size"]); ?></td>
 
 						        <td align="right"> <span id="amt_<?php echo $i; ?>">0.00</span> </td>
 

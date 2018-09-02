@@ -14,7 +14,7 @@ if (isset($_POST['customer_name']) && isset($_POST['customer_email']) && isset($
 
     $name_value = array('customer_name' => rep($customer_name), 'customer_email' => rep($customer_email), 'customer_phone_number' => rep($customer_phone_number), 'customer_password' => encode($customer_password), 'Company_name' => rep($Company_name), 'customer_address'=>rep($customer_address));
         // check if user is already existed
-$user = $customer->customer_register($name_value, "customer added successfully. Please enter another.", "Sorry, nothing is added.", "Sorry, email id is already added. Please use another email id.");
+$user = $customer->customer_register($name_value, "You are successfully registered with us, Your account will be activated after verification .", "Sorry, nothing is added.", "Sorry, email id is already registered. Please use another email id.");
  
  echo json_encode($user);
 	} else {

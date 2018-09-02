@@ -135,7 +135,7 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 								<label>CST No.</label>
 
-								<input type="text" name="cst_no" value="<?php echo $customer_array[0]["cst_no"]; ?>">>
+								<input type="text" name="cst_no" value="<?php echo $customer_array[0]["cst_no"]; ?>"> 
 
 							</div>
 
@@ -143,7 +143,7 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 								<label>PAN No.</label>
 
-								<input type="text" name="pan_no" value="<?php echo $customer_array[0]["pan_no"]; ?>">>
+								<input type="text" name="pan_no" value="<?php echo $customer_array[0]["pan_no"]; ?>"> 
 
 							</div>
 

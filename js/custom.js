@@ -512,7 +512,7 @@ window.location.href = "shopping-bag.php";
 
 });
 
-
+if($('.p-derails-wrap').length>0){ 
 $(document).on('keyup change','.set_qty',function(){
   var row= $(this).attr("data-id");
   var set_qty =Number($("#set_"+row+"").val());
@@ -520,6 +520,8 @@ $(document).on('keyup change','.set_qty',function(){
   var style_mrp= $("#style_mrp_for_size"+row+"").val();
   var stock_in_hand=Number($("#stock_in_hand"+row+"").val());
  var discount= $("#discount_percent").val();
+ console.log(set_qty);
+ console.log(stock_in_hand);
  
 if(set_qty<=stock_in_hand){
   var total= style_mrp*set_qty*Pcs; 
@@ -528,7 +530,9 @@ total=total*discount/100;
   }  
   total =Number(total.toFixed(2));
    //alert(total);
-  $("#amt_"+row+"").html(total);
+  $("#amt_"+row+"").autoNumeric('init');
+  $("#amt_"+row+"").autoNumeric('set', total);
+  //$("#amt_"+row+"").html(total);
   $("#amount_"+row+"").val(total);
 
    var piece =Pcs*set_qty; 
@@ -545,7 +549,48 @@ else{
  //console.log(totalcal());
  
   });
+}
 
+
+if($('.wishlist-row').length>0){ 
+
+$(document).on('keyup change','.set_qty',function(){
+  var row= $(this).attr("data-id");
+  var set_qty =Number($(this).val());
+  var Pcs= $("#style_set_qty_"+row+"").val();
+  var style_mrp= $("#style_mrp_for_size"+row+"").val();
+  var stock_in_hand=Number($("#stock_in_hand"+row+"").val());
+ var discount= $("#discount_percent").val();
+ console.log(set_qty);
+ console.log(stock_in_hand);
+ 
+if(set_qty<=stock_in_hand){
+  var total= style_mrp*set_qty*Pcs; 
+    if (discount>0) {
+total=total*discount/100; 
+  }  
+  total =Number(total.toFixed(2));
+   //alert(total);
+  $("#amt_"+row+"").autoNumeric('init');
+  $("#amt_"+row+"").autoNumeric('set', total);
+  //$("#amt_"+row+"").html(total);
+  $("#amount_"+row+"").val(total);
+
+   var piece =Pcs*set_qty; 
+
+   $("#piece"+row+"").val(piece);
+    $("#set_piece_"+row+"").html(piece);
+  
+}
+else{
+  $("#set_"+row+"").val(stock_in_hand);
+  swal(  'Sorry',  'The style is out of stock, Available stock is :'+stock_in_hand+'',  'error'); 
+}
+ //console.log(calculate(row));
+ //console.log(totalcal());
+ 
+  });
+}
 
 
 	

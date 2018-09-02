@@ -197,7 +197,7 @@ class babygo_customer {
 				// Success Message For Insert a New customer //
 				$user=  $this->customer_display($this->db->tbl_pre . "customer_tbl", array(), "WHERE customer_id=" . $customer_id . "");
 
-				$response["status"]               = FALSE;
+				$response["status"]               = TRUE;
 				$response["msg"] = $customer_success_message;
                 $response["customer_id"]                    = $user[0]["customer_id"];
                 $response["user"]["customer_name"]          = $user[0]["customer_name"];

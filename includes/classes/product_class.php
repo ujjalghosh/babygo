@@ -20,6 +20,13 @@ class babygo_product {
 			if ($product_add['affectedRow'] > 0) {
 				$product_id = $product_add['insertedId'];
 
+					$size_id = $_REQUEST['size_id'];
+					$style_set_qty = $_REQUEST['style_set_qty'];
+					$style_mrp_for_size = $_REQUEST['style_mrp_for_size'];
+
+					$detalis_value = array('product_id' => rep($product_id), 'style_set_qty' => rep($style_set_qty), 'style_mrp_for_size' => rep($style_mrp_for_size),'size_id' => rep($size_id) );	 
+					 $this->db->insert('product_details_tbl', $detalis_value);
+
  
 				if ($_FILES['style_list_image']['size'] > 0) {
 						$original = 'images/product_list/';
@@ -65,7 +72,7 @@ class babygo_product {
 					move_uploaded_file($style_color_image_tmp, $listing_image_img);
  $this->db->insert("color_image_tbl", array('product_id' => $product_id ,'listing_image'=>$listing_image_name_saved) );
 				}
-
+goods_movement_summary();
 
 				// Success Message For Insert a New product_type_style //
 				$_SESSION['product_msg'] = messagedisplay($product_success_message, 1);
@@ -92,7 +99,17 @@ class babygo_product {
 		if ($product_duplicate_check_num == 0) {
 			$product_update = $this->db->update('product_tbl', $product_array, "product_id='" . $product_id . "'");
  if ($product_update) {
+$this->db->delete("product_details_tbl", array("product_id" => $product_id));
+			$size_id = $_REQUEST['size_id'];
+			$style_set_qty = $_REQUEST['style_set_qty'];
+			$style_mrp_for_size = $_REQUEST['style_mrp_for_size'];
+
+			$detalis_value = array('product_id' => rep($product_id), 'style_set_qty' => rep($style_set_qty), 'style_mrp_for_size' => rep($style_mrp_for_size),'size_id' => rep($size_id) );	 
+			 $this->db->insert('product_details_tbl', $detalis_value);
+
+
  	$file_up_count++;
+ 	goods_movement_summary();
  }
 			
 				// Success Message For Update a Existing product //

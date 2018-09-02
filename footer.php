@@ -87,6 +87,7 @@
 </body>
 
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/autoNumeric.js"></script>
 
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 

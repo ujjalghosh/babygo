@@ -37,10 +37,14 @@ $order_num = $db->total($orderchk_query);
 		     if ($order_num != 0) {		
       $orderchk_array = $db->result($orderchk_query);
       if (count($orderchk_array)>0) {
- 
+   $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct "  , array(), "WHERE  ct.customer_id='".$customer_id."'   "); 
+
+   $shipping_address = strip_tags($customer_array[0]["shipping_address"]);
+  $customer_address = strip_tags($customer_array[0]["customer_address"]);
+
   $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct, " . $db->tbl_pre . "customer_category_tbl cct", array(), "WHERE  ct.customer_id='".$customer_id."' and cct.category_id=ct.customer_category "); 
-  $response["shipping_aadress"]= strip_tags($customer_array[0]["shipping_address"]);
-  $response["billing_address"]= strip_tags($customer_array[0]["customer_address"]);
+
+
 
 	for($k=0;$k<count($orderchk_array);$k++) {
 	$product_list= $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE product_id ='".$orderchk_array[$k]["product_id"]."'  " );
@@ -83,7 +87,7 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 						    <input type="hidden" readonly="true" id="piece<?php echo $d; ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_piece_<?php echo $d; ?>"  value="<?php echo $pddetails[0]["style_set_qty"]; ?>">
 
 							        <td align="left"><?php echo $pddetails[0]["size_description"]; ?></td>
-							        <td> <input class="set_qty" type="text" value="<?php echo $order_array[$d]["total_set"] ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_set_<?php echo $d; ?>"></td>
+							        <td> <input class="set_qty" data-id="<?php echo $d;?>" type="text" value="<?php echo $order_array[$d]["total_set"] ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_set_<?php echo $d; ?>"></td>
 							        <td><?php echo $order_array[$d]["piece"] ?></td>
 							        <td><?php echo $order_array[$d]["mrp"] ?></td>
 							        <td align="right"><?php echo $order_array[$d]["amount"] ?></td>
@@ -116,14 +120,14 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 				<div class="ibox-row">
 					<label>Billling Address</label>
 					<div class="input-holder">
-						<input type="text" name="billing_address" readonly="" value="<?php echo strip_tags($customer_array[0]["customer_address"]);?>">
+						<input type="text" name="billing_address" readonly="" value="<?php echo strip_tags($customer_address);?>">
 						<a class="edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 					</div>					
 				</div>
 				<div class="ibox-row">
 					<label>Shipping Address</label>
 					<div class="input-holder">
-						<input type="text" name="shipping_address"  value="<?php echo strip_tags($customer_array[0]["shipping_address"]);?>">
+						<input type="text" name="shipping_address"  value="<?php echo strip_tags($shipping_address);?>">
 						<a class="edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 					</div>
 				</div>

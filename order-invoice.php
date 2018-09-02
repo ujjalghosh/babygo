@@ -21,7 +21,7 @@ $order_list_array = $order->order_display($db->tbl_pre . "order_master", array()
 							</div>
 							<div class="ibox-row">
 								<div class="col-sm-5"><label>Amount</label></div>
-								<div class="col-sm-7"><div class="line"><?php echo $order_list_array[0]["total_bill_amount"]; ?>/-</div></div>
+								<div class="col-sm-7"><div class="line"><?php echo amount_format_in($order_list_array[0]["total_bill_amount"]); ?>/-</div></div>
 							</div>
 							<div class="ibox-row">
 								<div class="col-sm-5"><label>Status</label></div>

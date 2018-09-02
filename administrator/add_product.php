@@ -14,7 +14,7 @@ if ($_REQUEST['submit'] == 'Submit') {
  
 	$product_name = $_REQUEST['product_name'];
 	$style_decription = $_REQUEST['style_decription'];
-	$style_set_qty_mapping = $_REQUEST['style_set_qty_mapping'];
+	//$style_set_qty_mapping = $_REQUEST['style_set_qty_mapping'];
 	$style_color_qty=$_REQUEST['style_color_qty'];
 	$style_list_image=$_REQUEST['style_list_image'];
 } else {
@@ -28,7 +28,7 @@ if ($_REQUEST['submit'] == 'Submit') {
 	$style_list_image='';
 }
 if ($_REQUEST['submit'] == 'Submit') {
-	$name_value = array('style_no' => rep($style_no), 'category_id' => rep($category_id), 'group_id' => rep($group_id),'size_id' => rep($size_id),'style_set_qty' => rep($style_set_qty),'style_mrp_for_size' => rep($style_mrp_for_size),'product_name'=> rep($product_name), 'style_decription' => rep($style_decription), 'style_set_qty_mapping' => rep($style_set_qty_mapping), 'style_color_qty'=>rep($style_color_qty));
+	$name_value = array('style_no' => rep($style_no), 'category_id' => rep($category_id), 'group_id' => rep($group_id),'size_id' => rep($size_id),'style_set_qty' => rep($style_set_qty),'style_mrp_for_size' => rep($style_mrp_for_size),'product_name'=> rep($product_name), 'style_decription' => rep($style_decription),   'style_color_qty'=>rep($style_color_qty));
 	// Product Add //
 	if ($action == "add") {
 		$Product->Product_add($name_value, "Product added successfully. Please enter another.", "Sorry, nothing is added.", "Sorry, email id is already added. Please use another email id.");
@@ -160,12 +160,12 @@ $Product_size_array = $Product_size->Product_size_display($db->tbl_pre . "produc
 									<textarea class="form-control ckeditor" placeholder="Enter ..." name="style_decription" id="style_decription"><?php echo repc($Product_array[0]['style_decription']); ?></textarea>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Set Qty Mapping</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control  " placeholder="Enter ..." name="style_set_qty_mapping" id="style_set_qty_mapping"  data-validation-engine="validate[required]" value="<?php echo repc($Product_array[0]['style_set_qty_mapping']); ?>" />
-								</div>
-							</div>
+<!-- 							<div class="form-group">
+	<label class="col-sm-2 control-label">Set Qty Mapping</label>
+	<div class="col-sm-10">
+		<input type="text" class="form-control  " placeholder="Enter ..." name="style_set_qty_mapping" id="style_set_qty_mapping"  data-validation-engine="validate[required]" value="<?php echo repc($Product_array[0]['style_set_qty_mapping']); ?>" />
+	</div>
+</div> -->
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Colour Qty</label>
 								<div class="col-sm-10">
