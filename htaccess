@@ -1,0 +1,34 @@
+ 
+
+
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+
+RewriteRule ^shopping-bag/$ shopping-bag.php [L]
+
+RewriteRule ^terms/$ terms.php [L]
+
+#RewriteRule ^products/([^/]+)/$ products.php?category=$1 [L]
+
+RewriteRule ^products/$ products.php [L]
+RewriteRule ^product-details/$ product-details.php [L]
+RewriteRule ^my_orders/$ my_orders.php [L]
+RewriteRule ^shipping/$ shipping.php [L]
+RewriteRule ^return_policy/$ return_policy.php [L]
+RewriteRule ^faq/$ faq.php [L]
+RewriteRule ^about_us/$ about_us.php [L]
+RewriteRule ^contact_us/$ contact_us.php [L]
+RewriteRule ^privacy/$ privacy.php [L]
+
+RewriteRule ^wishlist/$ wishlist.php [L]
+RewriteRule ^login/$ login.php [L]
+RewriteRule ^my_account/$ my_account.php [L]
+RewriteRule ^my_orders/$ my_orders.php [L]
+RewriteRule ^logout/$ logout.php [L]
+
+
+</IfModule>
