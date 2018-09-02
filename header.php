@@ -101,7 +101,7 @@ for ($i=0; $i <count($notification_array) ; $i++) {  ?>
 							<li><a href="<?php echo Site_URL; ?>contact.php" data-tooltip="tooltip" data-placement="bottom" title="Contact"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
 							
 							<?php if($_SESSION['customer_id']!=''){
-								echo '<li><a href="'.Site_URL.'shopping-bag" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Bag"><i aria-hidden="true" class="fa fa-shopping-bag"></i></a></li> <li><a href="'.Site_URL.'account-setting.php" data-tooltip="tooltip" data-placement="bottom" title="Profile"><i class="fa fa-user" aria-hidden="true"></i></a></li>';
+								echo '<li><a href="'.Site_URL.'shopping-bag.php" data-tooltip="tooltip" data-placement="bottom" title="" data-original-title="Bag"><i aria-hidden="true" class="fa fa-shopping-bag"></i></a></li> <li><a href="'.Site_URL.'account-setting.php" data-tooltip="tooltip" data-placement="bottom" title="Profile"><i class="fa fa-user" aria-hidden="true"></i></a></li>';
 							echo '<li><a class="login" href="sign-out.php">Sign Out</a></li>';
 							} else{
 							echo '<li><a class="login" href="sign-in.php">Sign In</a></li>';
