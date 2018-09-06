@@ -40,7 +40,7 @@ $cart_details=count($response["cart_details"]);
 if ( $cart_details>0) {
     if ($response["preferred_courier_service"]=='') {
      $response["status"] = FALSE;
-    $response["msg"] = "Please enter your Preferred courier service.";  
+    $response["msg"] = "Please enter your Order instructions.";  
    echo json_encode($response);
     } else {
         $response["status"] = TRUE;

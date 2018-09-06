@@ -32,12 +32,12 @@ if (isset($_REQUEST['sort_by'])) {
         $order_by="num_of_sell DESC";
     }
 
-$product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id ='".$product_group_id."' order by ".$order_by." limit ".$position.", 4 ");
+$product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id IN (".$product_group_id.") order by ".$order_by." limit ".$position.", 4 ");
 
-$product_totalnum = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id ='".$product_group_id."' limit ".$position.", 4 ");
+$product_totalnum = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id IN (".$product_group_id.") limit ".$position.", 4 ");
 
 } else {
-    $product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id ='".$product_group_id."' limit ".$position.", 4 ");
+    $product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id IN (".$product_group_id.") limit ".$position.", 4 ");
 }
 }
 

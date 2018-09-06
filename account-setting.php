@@ -18,10 +18,10 @@
 						<div class="i-box acc-settings">
 							<h4>Account Settings</h4>
 							<div class="row">
-								<div class="ibox-row">
-									<div class="col-md-3"><label>Company Details</label></div>
-									<div class="col-md-9"><div class="line">&nbsp; <a class="edit" href="profile-edit.php"><i class="fa fa-angle-right" aria-hidden="true"></i></a></div></div>
-								</div>
+								<!--<div class="ibox-row">-->
+								<!--	<div class="col-md-3"><label>Company Details</label></div>-->
+								<!--	<div class="col-md-9"><div class="line">&nbsp; <a class="edit" href="profile-edit.php"><i class="fa fa-angle-right" aria-hidden="true"></i></a></div></div>-->
+								<!--</div>-->
 								<div class="ibox-row">
 									<div class="col-md-3"><label>Edit Profile</label></div>
 									<div class="col-md-9"><div class="line">&nbsp; <a class="edit" href="profile-edit.php"><i class="fa fa-pencil" aria-hidden="true"></i></a></div></div>

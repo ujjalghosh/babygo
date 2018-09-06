@@ -134,7 +134,7 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 			</div>
 			<div class="order-con">
 				<div class="courier-con">
-					<h5>Preferred courier service | Please Specify</h5>
+					<h5>Please specify :</h5>
 					<ul>
  
 						<li>

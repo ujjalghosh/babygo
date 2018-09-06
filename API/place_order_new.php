@@ -196,11 +196,11 @@ $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http
         <p style="text-align:center;font-size:13px;margin-bottom: 4px;font-weight: bold;">SALES ORDER</p>
         <table width="600" cellpadding="1" cellspacing="0" style="margin:0 auto;border:1px solid #000;border-collapse: collapse;">
           <tr>
-            <th colspan="8" align="center" style="font-size:13px;text-transform:uppercase;font-weight: 400;">IRIS CLOTHINGS PRIVATE LIMITED</th>
+            <th colspan="8" align="center" style="font-size:13px;text-transform:uppercase;font-weight: 400;">Green Orbit Apparels Pvt Ltd</th>
           </tr>
           <tr style="font-size:14px">            
             <td colspan="4">
-                103/24/1, Foreshore Road<br/>Binani Metal Compound<br/>Howrah - 711102<br/>West Bengal<br/>Phone No. : +91 33 2637 3856/81000 74062<br/>CIN : U18109WB2011PTC166895<br/>GSTIN No.: 19AACCI6963K1Z0<br/><br/>PAN : AACCI6963K
+                21, Ballygunge Circular Road,<br/>Cpc Office Complex, 1st Floor, Suite No-III, <br/>Kolkata - 700019<br/>West Bengal<br/>Phone No. :  033 4602 6390<br/>CIN :xxxxxxxxxx<br/>GSTIN No.: 19AACCG5839Q1ZT<br/><br/>PAN : 19AACCG5839Q
             </td>
             <td colspan="4">
                 <img src="'.Site_URL.'images/logo_order.png" width="135" alt="logo" />
@@ -285,7 +285,7 @@ $message.='<tr style="border-bottom: 1px solid #000;">
           </tr>
           <tr>
             <td colspan="8" style="font-size:13px;">
-                Terms :<br/>1) Defects/Shotages if any should be reported within three days from the receipt of goods.<br/>2) Interest @18 % will be charged after due date.<br/>3) All Subject to Howrah Jurisdiction.<br/>4) Our Banker : Axis Bank Ltd, Corporate Banking Branch, A/c. 916030037170546, IFSC: UTIB0001164.<br/>5) This is a computer generated copy hence signature is not required.
+                Terms :<br/>1) Defects/Shortages if any should be reported within three days from the receipt of goods.<br/>2) Interest @18 % will be charged after due date.<br/>3) All Subject to Kolkata Jurisdiction.<br/>4) Our Banker : XXXXX Bank Ltd, Corporate Banking Branch, A/c. XXXXXXXXXXXX, IFSC: XXXXXXXXXX.<br/>5) This is a computer generated copy hence signature is not required.
             </td>
           </tr>
         </table>

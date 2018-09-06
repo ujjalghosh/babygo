@@ -143,14 +143,14 @@ $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http
         <p style="text-align:center;font-size:13px;margin-bottom: 4px;font-weight: bold;">SALES ORDER</p>
         <table width="600" cellpadding="1" cellspacing="0" style="margin:0 auto;border:1px solid #000;border-collapse: collapse;">
           <tr>
-            <th colspan="8" align="center" style="font-size:13px;text-transform:uppercase;font-weight: 400;">IRIS CLOTHINGS PRIVATE LIMITED</th>
+            <th colspan="8" align="center" style="font-size:13px;text-transform:uppercase;font-weight: 400;">Green Orbit Apparels Pvt Ltd</th>
           </tr>
           <tr style="font-size:14px">            
             <td colspan="4">
-                103/24/1, Foreshore Road<br/>Binani Metal Compound<br/>Howrah - 711102<br/>West Bengal<br/>Phone No. : +91 33 2637 3856/81000 74062<br/>CIN : U18109WB2011PTC166895<br/>GSTIN No.: 19AACCI6963K1Z0<br/><br/>PAN : AACCI6963K
+                21, Ballygunge Circular Road,<br/>Cpc Office Complex, 1st Floor, Suite No-III,<br/>Kolkata- 700019<br/>West Bengal<br/>Phone No. : 033 4602 6390<br/>CIN : xxxxxxxxxxxxxxxx<br/>GSTIN No.: 19AACCG5839Q1ZT<br/><br/>PAN : AACCG5839Q
             </td>
             <td colspan="4">
-                <img src="'.Site_URL.'images/logo_order.png" width="135" alt="logo" />
+                <img src="'.Site_URL.'images/logo.png" width="135" alt="logo" />
             </td>
           </tr>
           <tr>
