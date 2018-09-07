@@ -5,16 +5,26 @@ header('Location: '.Site_url.'');
 
 if (isset($_REQUEST['Submit'])) {	
  	$customer_id =$_SESSION['customer_id'];
-    $customer_name = $_REQUEST['customer_name']; 
-    $customer_phone_number = $_REQUEST['customer_phone_number']; 
+    $customer_name = $_REQUEST['customer_name'];
+    $customer_email = $_REQUEST['customer_email'];
+    $customer_phone_number = $_REQUEST['customer_phone_number'];
+    $customer_password = $_REQUEST['customer_password'];
     $Company_name = $_REQUEST['Company_name'];
     $customer_address=$_REQUEST['customer_address'];
-    $shipping_address = $_REQUEST['shipping_address'];
-    $vat_no = $_REQUEST['vat_no'];
-    $cst_no = $_REQUEST['cst_no'];
+    $customer_telephone=$_REQUEST['customer_telephone'];
+    $customer_city=$_REQUEST['customer_city'];
+    $customer_state=$_REQUEST['customer_state'];
+    $customer_pin=$_REQUEST['customer_pin'];
+    $shipping_address=$_REQUEST['shipping_address'];
+    $shipping_city=$_REQUEST['shipping_city'];
+    $shipping_state=$_REQUEST['shipping_state'];
+    $shipping_pin=$_REQUEST['shipping_pin'];
+    $gst_no=$_REQUEST['gst_no'];
     $pan_no=$_REQUEST['pan_no'];
 
-    $name_value = array('customer_name' => rep($customer_name), 'customer_phone_number' => rep($customer_phone_number), 'shipping_address' => rep($shipping_address), 'Company_name' => $Company_name, 'Company_name' => rep($Company_name), 'customer_address'=>rep($customer_address),'vat_no'=>rep($vat_no),'cst_no'=>rep($cst_no),'pan_no'=>rep($pan_no));
+  // $name_value = array('customer_name' => rep($customer_name), 'customer_phone_number' => rep($customer_phone_number), 'shipping_address' => rep($shipping_address), 'Company_name' => $Company_name, 'Company_name' => rep($Company_name), 'customer_address'=>rep($customer_address),'vat_no'=>rep($vat_no),'cst_no'=>rep($cst_no),'pan_no'=>rep($pan_no));
+
+    $name_value = array('customer_name' => rep($customer_name), 'customer_email' => rep($customer_email), 'customer_phone_number' => rep($customer_phone_number), 'customer_password' => encode($customer_password), 'Company_name' => rep($Company_name), 'customer_address'=>rep($customer_address), 'customer_telephone'=>rep($customer_telephone), 'customer_city'=>rep($customer_city), 'customer_state'=>rep($customer_state), 'customer_pin'=>rep($customer_pin), 'shipping_address'=>rep($shipping_address), 'shipping_city'=>rep($shipping_city), 'shipping_state'=>rep($shipping_state), 'shipping_pin'=>rep($shipping_pin), 'gst_no'=>rep($gst_no), 'pan_no'=>rep($pan_no));
 
 $customer->customer_edit($name_value, $customer_id, "Your profile updated successfully.", "Sorry, nothing is updated.", "Sorry, email id is already added. Please use another email id.");
 }
@@ -71,7 +81,7 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 								<label>Telephone</label>
 
-								<input type="text" name="customer_phone_number" value="<?php echo $customer_array[0]["customer_phone_number"]; ?>">
+								<input type="text" name="customer_telephone" value="<?php echo $customer_array[0]["customer_telephone"]; ?>">
 
 							</div>
 
@@ -95,30 +105,29 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 								<label>Billing Address</label>
 
-								<input type="text" name="customer_address" value="<?php echo $customer_array[0]["customer_address"]; ?>">
+								<textarea name="customer_address" class="notes"><?php echo $customer_array[0]["customer_address"]; ?></textarea>
+
+								<!-- <input type="text" name="customer_address" value="<?php echo $customer_array[0]["customer_address"]; ?>"> -->
 
 							</div>
 
-							 <div class="ibox-row">
-
-							<label>City</label>
-
-							<input type="text" name="customer_address1" value="<?php echo $customer_array[0]["customer_address"]; ?>">
-
-						</div>
+							<div class="ibox-row"> 
+							<label>City</label> 
+							<input type="text" name="customer_city" value="<?php echo $customer_array[0]["customer_city"]; ?>"> 
+						    </div>
 
 							 <div class="ibox-row">
 
 								<label>State</label>
 
-								<input type="text" name="customer_address1" value="<?php echo $customer_array[0]["customer_address"]; ?>">
+								<input type="text" name="customer_state" value="<?php echo $customer_array[0]["customer_state"]; ?>">
 
 							</div>
 														 <div class="ibox-row">
 
 								<label>PIN</label>
 
-								<input type="text" name="customer_address1" value="<?php echo $customer_array[0]["customer_address"]; ?>">
+								<input type="text" name="customer_pin" value="<?php echo $customer_array[0]["customer_pin"]; ?>">
 
 							</div>
 
@@ -134,15 +143,31 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 								<label>Shipping Address</label>
 
-								<input type="text" name="shipping_address" value="<?php echo $customer_array[0]["shipping_address"]; ?>">
+								<textarea name="shipping_address" class="notes"><?php echo $customer_array[0]["shipping_address"]; ?></textarea>
+
+								<!-- <input type="text" name="shipping_address" value="<?php echo $customer_array[0]["shipping_address"]; ?>"> -->
 
 							</div>
 
-							<div class="ibox-row">
+		
 
-								<label class="hidden-xs">&nbsp;</label>
+							<div class="ibox-row"> 
+							<label>City</label> 
+							<input type="text" name="shipping_city" value="<?php echo $customer_array[0]["shipping_city"]; ?>"> 
+						    </div>
 
-								<input type="text" name="">
+							 <div class="ibox-row">
+
+								<label>State</label>
+
+								<input type="text" name="shipping_state" value="<?php echo $customer_array[0]["shipping_state"]; ?>">
+
+							</div>
+														 <div class="ibox-row">
+
+								<label>PIN</label>
+
+								<input type="text" name="shipping_pin" value="<?php echo $customer_array[0]["shipping_pin"]; ?>">
 
 							</div>
 
@@ -150,17 +175,17 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 								<label>GST No.</label>
 
-								<input type="text" name="vat_no" value="<?php echo $customer_array[0]["vat_no"]; ?>">
+								<input type="text" name="gst_no" value="<?php echo $customer_array[0]["gst_no"]; ?>">
 
 							</div>
 
-							<div class="ibox-row">
+<!-- 							<div class="ibox-row">
 
-								<label>CST No.</label>
+	<label>CST No.</label>
 
-								<input type="text" name="cst_no" value="<?php echo $customer_array[0]["cst_no"]; ?>"> 
+	<input type="text" name="cst_no" value="<?php echo $customer_array[0]["cst_no"]; ?>"> 
 
-							</div>
+</div> -->
 
 							<div class="ibox-row">
 

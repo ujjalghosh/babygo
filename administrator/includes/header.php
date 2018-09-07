@@ -165,8 +165,8 @@ $page_name = basename($_SERVER['PHP_SELF']);
    <i class="fa fa-angle-left pull-right"></i>
  </a>
  <ul class="treeview-menu">
-   <!-- <li class="<?php echo $page_name == 'order.php' ? 'active' : ''; ?>"><a href="order.php"><i class="fa fa-circle-o"></i> Add Customer</a></li> -->
-   <!-- <li class="<?php echo $page_name == 'manage_order.php' ? 'active' : ''; ?>"><a href="manage_order.php"><i class="fa fa-circle-o"></i> Manage Order</a></li> -->
+<li class="<?php echo $page_name == 'order.php' ? 'active' : ''; ?>"><a href="order.php"><i class="fa fa-circle-o"></i> Add Customer</a></li>
+<li class="<?php echo $page_name == 'manage_order.php' ? 'active' : ''; ?>"><a href="manage_order.php"><i class="fa fa-circle-o"></i> Manage Order</a></li>
  </ul>
   
 </li>

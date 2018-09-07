@@ -282,31 +282,31 @@ function messagedisplay($var  = "", $mode = 3) {
 		case 1:
 		$var  = " <div class='alert alert-success alert-dismissable'>
 		<button aria-hidden='true' data-dismiss='alert' class='close' type='button'>×</button>
-		<h4><i class='icon fa fa-check'></i> Alert!</h4>" . $var . "</div> ";
+		" . $var . "</div> ";
 						//Success
 		break;
 		case 2:
 		$var = " <div class='alert alert-danger alert-dismissable'>
 		<button aria-hidden='true' data-dismiss='alert' class='close' type='button'>×</button>
-		<h4><i class='icon fa fa-ban'></i> Alert!</h4>" . $var . "</div> ";
+		 " . $var . "</div> ";
 						//Error
 		break;
 		case 3:
 		$var = " <div class='alert alert-warning alert-dismissable'>
 		<button aria-hidden='true' data-dismiss='alert' class='close' type='button'>×</button>
-		<h4><i class='icon fa fa-warning'></i> Alert!</h4>" . $var . "</div> ";
+		 " . $var . "</div> ";
 						//Message
 		break;
 		case 4:
 		$var = " <div class='alert alert-danger alert-dismissable'>
 		<button aria-hidden='true' data-dismiss='alert' class='close' type='button'>×</button>
-		<h4><i class='icon fa fa-ban'></i> Alert!</h4>" . $var . "</div> ";
+		 " . $var . "</div> ";
 						//Critical
 		break;
 		default:
 		$var = " <div class='alert alert-warning alert-dismissable'>
 		<button aria-hidden='true' data-dismiss='alert' class='close' type='button'>×</button>
-		<h4><i class='icon fa fa-warning'></i> Alert!</h4>" . $var . "</div> ";
+		 " . $var . "</div> ";
 						//Message
 		break;
 	}

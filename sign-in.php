@@ -26,6 +26,14 @@
 				    			<input type="text" name="customer_name" id="customer_name">
 				    		</div>
 				    		<div class="input-holder">
+				    			<label>Company Name</label>
+				    			<input type="text" name="Company_name" id="Company_name">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>Telephone</label>
+				    			<input type="text" name="customer_telephone" id="customer_telephone">
+				    		</div>
+				    		<div class="input-holder">
 				    			<label>Mobile</label>
 				    			<input type="text" name="customer_phone_number" id="customer_phone_number">
 				    		</div>
@@ -41,6 +49,55 @@
 				    			<label>Confirm Password</label>
 				    			<input type="password"  name="password_confirm"  id="password_confirm">
 				    		</div>
+
+				    		 <ADDRESS>Billing Address</ADDRESS>
+							<div class="input-holder">
+				    			<label>Address</label>
+				    			<input type="text" name="customer_address" id="customer_address">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>City</label>
+				    			<input type="text" name="customer_city" id="customer_city">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>State</label>
+				    			<input type="text" name="customer_state" id="customer_state">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>PIN Code</label>
+				    			<input type="text" name="customer_pin" id="customer_pin">
+				    		</div>
+
+				    		<ADDRESS>Shipping Address</ADDRESS>
+							<div class="input-holder">
+				    			<label>Address</label>
+				    			<input type="text" name="shipping_address" id="shipping_address">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>City</label>
+				    			<input type="text" name="shipping_city" id="shipping_city">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>State</label>
+				    			<input type="text" name="shipping_state" id="shipping_state">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>PIN Code</label>
+				    			<input type="text" name="shipping_pin" id="shipping_pin">
+				    		</div>
+
+				    		<div class="input-holder">
+				    			<label>GST No</label>
+				    			<input type="text" name="gst_no" id="gst_no">
+				    		</div>
+				    		<div class="input-holder">
+				    			<label>PAN NO</label>
+				    			<input type="text" name="pan_no" id="pan_no">
+				    		</div>
+
+				    		 
+
+
 				    		<input class="border-btn" type="submit" value="Sign Up">
 				    		<p class="sign-tip text-center">Already Have an Account? <a id="gt-si" href="#">SIGN IN</a></p>	    		
 				    	</form>
