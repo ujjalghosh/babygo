@@ -25,6 +25,7 @@ if (isset($_REQUEST['category_id'])) {
 if (isset($_REQUEST['category_id'])) {
 if(isset($_REQUEST['refine_by'])){
 	$product_group_id=$_REQUEST['refine_by'];
+    $sql_group = "(group_id LIKE '%,$product_group_id,%' OR group_id LIKE '$product_group_id,%' OR group_id LIKE '%,$product_group_id' OR group_id = '$product_group_id') ";
 if (isset($_REQUEST['sort_by'])) {
     $orderby=$_REQUEST['sort_by'];
     if ($orderby=="Popularity") {
@@ -37,12 +38,12 @@ if (isset($_REQUEST['sort_by'])) {
         $order_by="num_of_sell DESC";
     }
 
-$product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id ='".$product_group_id."' order by ".$order_by." limit ".$position.", 4 ");
+$product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  ".$sql_group." order by ".$order_by." limit ".$position.", 4 ");
 
-$product_totalnum = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id ='".$product_group_id."' limit ".$position.", 4 ");
+$product_totalnum = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  ".$sql_group." limit ".$position.", 4 ");
 
 } else {
-    $product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  group_id ='".$product_group_id."' limit ".$position.", 4 ");
+    $product_array = $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE category_id=".$category_id." and  ".$sql_group." limit ".$position.", 4 ");
 }
 }
 
