@@ -8,7 +8,6 @@ if (isset($_REQUEST['Submit'])) {
     $customer_name = $_REQUEST['customer_name'];
     $customer_email = $_REQUEST['customer_email'];
     $customer_phone_number = $_REQUEST['customer_phone_number'];
-    $customer_password = $_REQUEST['customer_password'];
     $Company_name = $_REQUEST['Company_name'];
     $customer_address=$_REQUEST['customer_address'];
     $customer_telephone=$_REQUEST['customer_telephone'];
@@ -24,7 +23,7 @@ if (isset($_REQUEST['Submit'])) {
 
   // $name_value = array('customer_name' => rep($customer_name), 'customer_phone_number' => rep($customer_phone_number), 'shipping_address' => rep($shipping_address), 'Company_name' => $Company_name, 'Company_name' => rep($Company_name), 'customer_address'=>rep($customer_address),'vat_no'=>rep($vat_no),'cst_no'=>rep($cst_no),'pan_no'=>rep($pan_no));
 
-    $name_value = array('customer_name' => rep($customer_name), 'customer_email' => rep($customer_email), 'customer_phone_number' => rep($customer_phone_number), 'customer_password' => encode($customer_password), 'Company_name' => rep($Company_name), 'customer_address'=>rep($customer_address), 'customer_telephone'=>rep($customer_telephone), 'customer_city'=>rep($customer_city), 'customer_state'=>rep($customer_state), 'customer_pin'=>rep($customer_pin), 'shipping_address'=>rep($shipping_address), 'shipping_city'=>rep($shipping_city), 'shipping_state'=>rep($shipping_state), 'shipping_pin'=>rep($shipping_pin), 'gst_no'=>rep($gst_no), 'pan_no'=>rep($pan_no));
+    $name_value = array('customer_name' => rep($customer_name), 'customer_email' => rep($customer_email), 'customer_phone_number' => rep($customer_phone_number), 'Company_name' => rep($Company_name), 'customer_address'=>rep($customer_address), 'customer_telephone'=>rep($customer_telephone), 'customer_city'=>rep($customer_city), 'customer_state'=>rep($customer_state), 'customer_pin'=>rep($customer_pin), 'shipping_address'=>rep($shipping_address), 'shipping_city'=>rep($shipping_city), 'shipping_state'=>rep($shipping_state), 'shipping_pin'=>rep($shipping_pin), 'gst_no'=>rep($gst_no), 'pan_no'=>rep($pan_no));
 
 $customer->customer_edit($name_value, $customer_id, "Your profile updated successfully.", "Sorry, nothing is updated.", "Sorry, email id is already added. Please use another email id.");
 }
@@ -203,7 +202,7 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 						</div>
 
-						<button class="border-btn fill" type="button" name="">Sign Out</button>
+						<button class="border-btn fill" type="button" name="" onclick="window.location.href='<?php echo Site_URL; ?>sign-out.php'">Sign Out</button>
 
 						</form>
 
