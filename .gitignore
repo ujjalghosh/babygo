@@ -1,3 +1,4 @@
 # settings
 
 includes/database_initial.php
+cache/*
