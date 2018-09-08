@@ -373,7 +373,8 @@ console.log(set_qty);
 console.log(stock_in_hand);
 
 if(set_qty<=stock_in_hand){
-var total= style_mrp*set_qty*Pcs;
+//var total= style_mrp*set_qty*Pcs;
+var total= style_mrp*set_qty;
 if (discount>0) {
 total=total*discount/100;
 }
