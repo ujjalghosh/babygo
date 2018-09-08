@@ -117,9 +117,19 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 							 <div class="ibox-row">
 
-								<label>State</label>
+								<label>State</label> 
+								 
 
-								<input type="text" name="customer_state" value="<?php echo $customer_array[0]["customer_state"]; ?>">
+  <select name="customer_state" id="customer_state" class="form-control select2" data-validation-engine="validate[required]" >
+                    <option value="">-- Select State --</option>
+<?php $state_array = $customer->customer_display($db->tbl_pre . "state_list_tbl", array(), ""); 
+for ($i=0; $i <count($state_array) ; $i++) { ?>
+
+<option value="<?php echo $state_array[$i]['Code']; ?>" <?php echo $customer_array[0]["customer_state"] == $state_array[$i]['Code'] ? 'selected="selected"' : ''; ?> > <?php echo $state_array[$i]['Subdivision_name']; ?> </option>  
+
+<?php } ?>
+                 
+ </select>
 
 							</div>
 														 <div class="ibox-row">
@@ -157,9 +167,18 @@ $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl", arr
 
 							 <div class="ibox-row">
 
-								<label>State</label>
+								<label>State</label> 
 
-								<input type="text" name="shipping_state" value="<?php echo $customer_array[0]["shipping_state"]; ?>">
+							 <select name="shipping_state" id="shipping_state" class="form-control select2" data-validation-engine="validate[required]" >
+                    <option value="">-- Select State --</option>
+<?php $state_array = $customer->customer_display($db->tbl_pre . "state_list_tbl", array(), ""); 
+for ($i=0; $i <count($state_array) ; $i++) { ?>
+
+<option value="<?php echo $state_array[$i]['Code']; ?>" <?php echo $customer_array[0]["shipping_state"] == $state_array[$i]['Code'] ? 'selected="selected"' : ''; ?> > <?php echo $state_array[$i]['Subdivision_name']; ?> </option>  
+
+<?php } ?>
+                 
+ </select>
 
 							</div>
 														 <div class="ibox-row">

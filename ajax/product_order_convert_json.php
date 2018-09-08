@@ -29,11 +29,8 @@ $response["total_bill_amount"]          = $_REQUEST['total_bill_amount'];
 $response["billing_address"]            = $_REQUEST['billing_address'];
 $response["shipping_address"]           = $_REQUEST['shipping_address'];
 
-if ($_REQUEST['radio-group']=="other-cour") {
-    $response["preferred_courier_service"]  = $_REQUEST['other_corier'];
-}else{
-    $response["preferred_courier_service"]  = $_REQUEST['radio-group'];
-}
+
+$response["preferred_courier_service"]  = $_REQUEST['other_corier'];
 
 $cart_details=count($response["cart_details"]);
 

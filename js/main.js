@@ -214,21 +214,7 @@ $(document).ready(function(){
 
     // on radio check display input
 
-    $("#other-inp").attr("disabled", true);
-
-    $(".c-radio").click(function() {	    
-
-	    if ($("input[name=radio-group]:checked").val() == "other-cour") {
-
-	        $("#other-inp").attr("disabled", false);
-
-	    }else{
-
-	    	$("#other-inp").attr("disabled", true);
-
-	    }
-
-	});  
+ 
 
 
 

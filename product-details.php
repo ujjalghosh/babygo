@@ -39,7 +39,7 @@ exit(header('location: sign-in.php'));
  }
 
  ?>
-<input type="hidden" name="discount_percent" id="discount_percent" value="<?php echo $discount_percent; ?>">
+
 	<div class="main-con">
 		<div class="container">
 			<div class="filter-wrap">
@@ -88,6 +88,7 @@ exit(header('location: sign-in.php'));
 						</div>
 
 						<form method="post"  id="order_details">
+							<input type="hidden" name="discount_percent" id="discount_percent" value="<?php echo $discount_percent; ?>">
 						<input type="hidden" name="item" value="<?php echo count($details); ?>">
 						<input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
 

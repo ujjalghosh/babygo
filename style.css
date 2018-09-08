@@ -165,7 +165,7 @@ input[type="password"],
 input[type="email"],
 
 input[type="text"]{background-color: transparent;border: 0;padding: 5px 12px;border-bottom: 1px solid #fff;height: 30px;font-size: 16px;color: #34456D;font-weight: 300}
-
+.ibox-row select{background-color: transparent;}
 
 
 /** tooltip style**/
@@ -1242,7 +1242,7 @@ span.opt.active{border: 5px solid #ffc605}
 
 .prof-edit .ibox-row label{width: 140px;float: left;}
 
-.prof-edit .ibox-row input,
+.prof-edit .ibox-row input,.prof-edit .ibox-row select,
 
 .prof-edit .ibox-row textarea{width: calc(100% - 140px);-webkit-width: calc(100% - 140px);float: left;}
 

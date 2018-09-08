@@ -37,10 +37,7 @@ $order_num = $db->total($orderchk_query);
 		     if ($order_num != 0) {		
       $orderchk_array = $db->result($orderchk_query);
       if (count($orderchk_array)>0) {
-   $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct "  , array(), "WHERE  ct.customer_id='".$customer_id."'   "); 
 
-   $shipping_address = strip_tags($customer_array[0]["shipping_address"]);
-  $customer_address = strip_tags($customer_array[0]["customer_address"]);
 
   $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct, " . $db->tbl_pre . "customer_category_tbl cct", array(), "WHERE  ct.customer_id='".$customer_id."' and cct.category_id=ct.customer_category "); 
 
@@ -117,11 +114,43 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 					<label>Total Bill Amount (Taxes extra)</label>
 					<input type="text" name="total_bill_amount" id="total_bill_amount" readonly="" value="<?php echo $total_bill_amount; ?>">
 				</div>
+<?php    $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct "  , array(), "WHERE  ct.customer_id='".$customer_id."'   "); 
+
+   $shipping_address = strip_tags($customer_array[0]["shipping_address"]);
+  $customer_address = strip_tags($customer_array[0]["customer_address"]); ?>
+
 				<div class="ibox-row">
 					<label>Billing Address</label>
 					<div class="input-holder">
 						<input type="text" name="billing_address" readonly="" value="<?php echo strip_tags($customer_address);?>">
 						<a class="edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+					</div>					
+				</div>
+				 <div class="ibox-row">
+					<label>Billing City</label>
+					<div class="input-holder">
+						<input type="text" name="customer_city" readonly="" value="<?php echo strip_tags($customer_city);?>"> 
+					</div>					
+				</div>
+								<div class="ibox-row">
+					<label>Billing State</label>
+					<div class="input-holder">
+						  <select name="customer_state" id="customer_state" class="form-control select2" data-validation-engine="validate[required]" >
+                    <option value="">-- Select State --</option>
+<?php $state_array = $customer->customer_display($db->tbl_pre . "state_list_tbl", array(), ""); 
+for ($i=0; $i <count($state_array) ; $i++) { ?>
+
+<option value="<?php echo $state_array[$i]['Code']; ?>" <?php echo $customer_array[0]["customer_state"] == $state_array[$i]['Code'] ? 'selected="selected"' : ''; ?> > <?php echo $state_array[$i]['Subdivision_name']; ?> </option>  
+
+<?php } ?>
+                 
+ </select> 
+					</div>					
+				</div>
+				 <div class="ibox-row">
+					<label>Billing PIN</label>
+					<div class="input-holder">
+						<input type="text" name="customer_pin" readonly="" value="<?php echo strip_tags($customer_pin);?>"> 
 					</div>					
 				</div>
 				<div class="ibox-row">
@@ -131,6 +160,34 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 						<a class="edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 					</div>
 				</div>
+				 <div class="ibox-row">
+					<label>Shipping City</label>
+					<div class="input-holder">
+						<input type="text" name="shipping_city" readonly="" value="<?php echo strip_tags($shipping_city);?>"> 
+					</div>					
+				</div>
+								<div class="ibox-row">
+					<label>Shipping State</label>
+					<div class="input-holder">
+						  <select name="shipping_state" id="shipping_state" class="form-control select2" data-validation-engine="validate[required]" >
+                    <option value="">-- Select State --</option>
+<?php $state_array = $customer->customer_display($db->tbl_pre . "state_list_tbl", array(), ""); 
+for ($i=0; $i <count($state_array) ; $i++) { ?>
+
+<option value="<?php echo $state_array[$i]['Code']; ?>" <?php echo $customer_array[0]["shipping_state"] == $state_array[$i]['Code'] ? 'selected="selected"' : ''; ?> > <?php echo $state_array[$i]['Subdivision_name']; ?> </option>  
+
+<?php } ?>
+                 
+ </select> 
+					</div>					
+				</div>
+				 <div class="ibox-row">
+					<label>Shipping PIN</label>
+					<div class="input-holder">
+						<input type="text" name="shipping_pin" readonly="" value="<?php echo strip_tags($shipping_pin);?>"> 
+					</div>					
+				</div>
+				
 			</div>
 			<div class="order-con">
 				<div class="courier-con">
@@ -138,7 +195,7 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 					<ul>
  
 						<li>
-							<input class="c-radio"    type="radio" id="other-opt" name="radio-group" value="other-cour" autocomplete="off"><label for="other-opt">Remarks</label>
+							 <label for="other-opt">Remarks</label>
 							<input id="other-inp" type="text" name="other_corier">
 						</li>
 					</ul>

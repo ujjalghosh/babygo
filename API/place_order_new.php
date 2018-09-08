@@ -117,14 +117,14 @@ $name_value = array('generate_no'=>$generate_no,'product_id' => rep($product_id)
   $order_confirm = $db->update('orders_tbl', $name_value, "product_id='" . $product_id . "' and customer_id='" . $customer_id . "'  and product_details_id='" . $product_details_id . "' and order_status='Cart' ");
 
 
-if ($order_confirm['affectedRow'] == 1) {
+/*if ($order_confirm['affectedRow'] == 1) {
   $details=$Product->product_display($db->tbl_pre . "product_details_tbl ", array(), "WHERE product_details_id ='".$product_details_id."'");
   //$order_pcs=$details[0]["style_set_qty"] * $set;
 $sub_stock_in_hand=$details[0]["stock_in_hand"]-$set;
 $name_value = array( 'stock_in_hand' => rep($sub_stock_in_hand) );
 
 $stock = $db->update('product_details_tbl', $name_value, "product_details_id='" . $product_details_id . "'   ");
-}
+}*/
 
 
 if ($order_confirm['affectedRow'] == 0) {
