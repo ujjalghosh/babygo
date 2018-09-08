@@ -621,15 +621,21 @@ return $amount;
 function goods_movement_summary(){
 global $db;
   $db->truncate("TRUNCATE table " . $db->tbl_pre .  "goods_movement_summary");
-
-    $db->executequery("INSERT INTO babygodb_goods_movement_summary (`product_id`, `stock_qty`, `avg_cost_price`) SELECT product_id, style_color_qty AS stock_qty, style_mrp_for_size as avg_cost_price FROM babygodb_product_tbl");
+// product summary stock price 
+  $db->executequery("INSERT INTO " . $db->tbl_pre .  "goods_movement_summary (`product_id`, `stock_qty`, `avg_cost_price`) SELECT A.`product_id`,sum(qty_in)-sum(qty_out) as stock_qty, IFNULL(avg(case when `reference_type`='purchase' then B.rate/qty_in else NULL end),0) as avg_cost_price FROM (select reference_id, product_id, reference_type, sum(qty_in) as qty_in, sum(qty_out) as qty_out FROM " . $db->tbl_pre .  "goods_movement_register group by reference_id, product_id, reference_type) AS A LEFT OUTER JOIN ( select bill_id, product_id, sum(rate) as rate FROM `" . $db->tbl_pre .  "purchase_bill_transaction` group by bill_id, product_id ) as B ON A.`reference_id` = B.`bill_id` AND A.`product_id`=B.`product_id` JOIN " . $db->tbl_pre .  "product_tbl C ON A.product_id = C.product_id group BY A.`product_id` ");
     
+// product stock update
+
+  // $db->executequery("INSERT INTO " . $db->tbl_pre .  "goods_movement_summary (`product_id`, `stock_qty`, `avg_cost_price`) SELECT A.`product_id`,sum(qty_in)-sum(qty_out) as stock_qty, IFNULL(avg(case when `reference_type`='purchase' then B.rate/qty_in else NULL end),0) as avg_cost_price FROM (select reference_id, product_id, reference_type, sum(qty_in) as qty_in, sum(qty_out) as qty_out FROM " . $db->tbl_pre .  "goods_movement_register group by reference_id, product_id, reference_type) AS A LEFT OUTER JOIN ( select bill_id, product_id, sum(rate) as rate FROM `" . $db->tbl_pre .  "purchase_bill_transaction` group by bill_id, product_id ) as B ON A.`reference_id` = B.`bill_id` AND A.`product_id`=B.`product_id` JOIN " . $db->tbl_pre .  "product_tbl C ON A.product_id = C.product_id group BY A.`product_id` ");
+
+/*"SELECT A.`product_id`,sum(qty_in)-sum(qty_out) as stock_qty  FROM (select reference_id, product_id, reference_type, sum(qty_in) as qty_in, sum(qty_out) as qty_out FROM babygodb_goods_movement_register group by reference_id, product_id, reference_type) AS A LEFT OUTER JOIN ( select bill_id, product_id, sum(rate) as rate FROM `babygodb_purchase_bill_transaction` group by bill_id, product_id ) as B ON A.`reference_id` = B.`bill_id` AND A.`product_id`=B.`product_id` JOIN babygodb_product_tbl C ON A.product_id = C.product_id group BY A.`product_id` "*/
 
 
-/*"INSERT INTO babygodb_goods_movement_summary (`product_id`, `stock_qty`, `avg_cost_price`)
-
-SELECT A.`product_id`,A.`company_id`,A.`location_id`,sum(qty_in)-sum(qty_out) as stock_qty, IFNULL(avg(case when `reference_type`='purchase' then B.rate/qty_in else NULL end),0) as avg_cost_price FROM (select reference_id, product_id, company_id, location_id, reference_type, sum(qty_in) as qty_in, sum(qty_out) as qty_out FROM  babygodb_goods_movement_register group by reference_id, product_id, company_id, location_id,reference_type) AS A LEFT OUTER JOIN ( select bill_id, product_id, sum(rate) as rate FROM `babygodb_purchase_bill_transaction` group by bill_id, product_id ) as B ON A.`reference_id` = B.`bill_id` AND A.`product_id`=B.`product_id` JOIN babygodb_product_tbl C ON A.product_id = C.product_id JOIN babygodb_product_group_tbl D ON C.product_group_id = D.product_group_id and D.type <> 'Service' group BY A.`product_id`,A.`company_id`,A.`location_id`"*/
-
+ $db->executequery("UPDATE babygodb_product_details_tbl t2,
+(   SELECT A.`product_id`,sum(qty_in)-sum(qty_out) as stock_qty  FROM (select reference_id, product_id, reference_type, sum(qty_in) as qty_in, sum(qty_out) as qty_out FROM babygodb_goods_movement_register group by reference_id, product_id, reference_type) AS A LEFT OUTER JOIN ( select bill_id, product_id, sum(rate) as rate FROM `babygodb_purchase_bill_transaction` group by bill_id, product_id ) as B ON A.`reference_id` = B.`bill_id` AND A.`product_id`=B.`product_id` JOIN babygodb_product_tbl C ON A.product_id = C.product_id group BY A.`product_id`
+) t1
+SET t2.stock_in_hand = t1.stock_qty
+WHERE t1.product_id = t2.product_id");
 
 }
 
