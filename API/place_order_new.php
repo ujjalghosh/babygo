@@ -297,7 +297,7 @@ $message.='<tr style="border-bottom: 1px solid #000;">
           </tr>
           <tr>
             <td colspan="8" style="font-size:13px;">
-                Terms :<br/>1) Defects/Shortages if any should be reported within three days from the receipt of goods.<br/>2) Interest @18 % will be charged after due date.<br/>3) All Subject to Kolkata Jurisdiction.<br/>4) Our Banker : XXXXX Bank Ltd, Corporate Banking Branch, A/c. XXXXXXXXXXXX, IFSC: XXXXXXXXXX.<br/>5) This is a computer generated copy hence signature is not required.
+                Terms :<br/>1) Defects/Shortages if any should be reported within three days from the receipt of goods.<br/>2) Interest @18 % will be charged after due date.<br/>3) All Subject to Kolkata Jurisdiction.<br/>4) Our Banker : ICICI Bank Ltd, Gurusuday  Branch, A/c. 129105000050, IFSC: ICIC0001291.<br/>5) This is a computer generated copy hence signature is not required.
             </td>
           </tr>
         </table>

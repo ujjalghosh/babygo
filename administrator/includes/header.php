@@ -174,7 +174,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
  <li class="treeview <?php echo $page_name == 'manage_invoice.php' || $page_name == 'add_invoice.php' ? 'active' : ''; ?>">
   <a href="#">
    <i class="fa fa-location-arrow"></i>
-   <span>Ordrer's Invoice </span>
+   <span> Invoice Module</span>
    <i class="fa fa-angle-left pull-right"></i>
  </a>
  <ul class="treeview-menu">
