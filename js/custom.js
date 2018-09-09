@@ -133,6 +133,7 @@ data: $("#place_order").serialize(), // serializes the form's elements.
 dataType: 'json',
 success: function(result)
 {
+ 
 // alert(result);
 //alert(JSON.stringify(result));
 if (result.status==true) {

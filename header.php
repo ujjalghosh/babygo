@@ -42,7 +42,7 @@ $notification_array = $notification->notification_display($db->tbl_pre . "notifi
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.bootpag.min.js"></script>
 </head>
-<body>
+<body oncontextmenu="return false;">
 	<header>
 		<div class="container">
 			<div class="logo-div text-center"><a href="<?php echo Site_URL; ?>"><img src="images/logo.png" alt="Dream Me"></a></div>

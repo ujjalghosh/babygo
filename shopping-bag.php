@@ -12,6 +12,7 @@ $order_num = $db->total($orderchk_query);
 
 ?>
 	<form method="post" id="place_order">	
+
 <input type="hidden" id="customer_id" name="customer_id" value="<?php echo $_SESSION['customer_id']; ?>">
 <input type="hidden" id="total_cart" name="total_cart" value="<?php echo $order_num; ?>">
 
@@ -40,9 +41,11 @@ $order_num = $db->total($orderchk_query);
 
 
   $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct, " . $db->tbl_pre . "customer_category_tbl cct", array(), "WHERE  ct.customer_id='".$customer_id."' and cct.category_id=ct.customer_category "); 
+  $discount_percent= $customer_array[0]["discount_persent"];
+?>
+<input type="hidden" name="discount_percent" id="discount_percent" value="<?php echo $discount_percent; ?>">
 
-
-
+<?php
 	for($k=0;$k<count($orderchk_array);$k++) {
 	$product_list= $Product->product_display($db->tbl_pre . "product_tbl", array(), "WHERE product_id ='".$orderchk_array[$k]["product_id"]."'  " );
 	for ($i=0; $i <count($product_list) ; $i++) { 
@@ -114,10 +117,11 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 					<label>Total Bill Amount (Taxes extra)</label>
 					<input type="text" name="total_bill_amount" id="total_bill_amount" readonly="" value="<?php echo $total_bill_amount; ?>">
 				</div>
-<?php    $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct "  , array(), "WHERE  ct.customer_id='".$customer_id."'   "); 
+<?php 
+   $customer_array = $customer->customer_display($db->tbl_pre . "customer_tbl ct "  , array(), "WHERE  ct.customer_id='".$customer_id."'   "); 
 
    $shipping_address = strip_tags($customer_array[0]["shipping_address"]);
-  $customer_address = strip_tags($customer_array[0]["customer_address"]); ?>
+   $customer_address = strip_tags($customer_array[0]["customer_address"]); ?>
 
 				<div class="ibox-row">
 					<label>Billing Address</label>
@@ -129,13 +133,13 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 				 <div class="ibox-row">
 					<label>Billing City</label>
 					<div class="input-holder">
-						<input type="text" name="customer_city" readonly="" value="<?php echo strip_tags($customer_city);?>"> 
+						<input type="text" name="billing_city" readonly="" value="<?php echo $customer_array[0]["customer_city"]; ?>"> 
 					</div>					
 				</div>
 								<div class="ibox-row">
 					<label>Billing State</label>
 					<div class="input-holder">
-						  <select name="customer_state" id="customer_state" class="form-control select2" data-validation-engine="validate[required]" >
+						  <select name="billing_state" id="billing_state" class="form-control select2" data-validation-engine="validate[required]" >
                     <option value="">-- Select State --</option>
 <?php $state_array = $customer->customer_display($db->tbl_pre . "state_list_tbl", array(), ""); 
 for ($i=0; $i <count($state_array) ; $i++) { ?>
@@ -150,7 +154,7 @@ for ($i=0; $i <count($state_array) ; $i++) { ?>
 				 <div class="ibox-row">
 					<label>Billing PIN</label>
 					<div class="input-holder">
-						<input type="text" name="customer_pin" readonly="" value="<?php echo strip_tags($customer_pin);?>"> 
+						<input type="text" name="billing_pin" readonly="" value="<?php echo $customer_array[0]["customer_pin"];?>"> 
 					</div>					
 				</div>
 				<div class="ibox-row">
@@ -163,7 +167,7 @@ for ($i=0; $i <count($state_array) ; $i++) { ?>
 				 <div class="ibox-row">
 					<label>Shipping City</label>
 					<div class="input-holder">
-						<input type="text" name="shipping_city" readonly="" value="<?php echo strip_tags($shipping_city);?>"> 
+						<input type="text" name="shipping_city" readonly="" value="<?php echo $customer_array[0]["shipping_city"];;?>"> 
 					</div>					
 				</div>
 								<div class="ibox-row">
@@ -184,7 +188,7 @@ for ($i=0; $i <count($state_array) ; $i++) { ?>
 				 <div class="ibox-row">
 					<label>Shipping PIN</label>
 					<div class="input-holder">
-						<input type="text" name="shipping_pin" readonly="" value="<?php echo strip_tags($shipping_pin);?>"> 
+						<input type="text" name="shipping_pin" readonly="" value="<?php echo $customer_array[0]["shipping_pin"];?>"> 
 					</div>					
 				</div>
 				
@@ -196,7 +200,7 @@ for ($i=0; $i <count($state_array) ; $i++) { ?>
  
 						<li>
 							 <label for="other-opt">Remarks</label>
-							<input id="other-inp" type="text" name="other_corier">
+							<input id="other-inp" type="text" name="remarks">
 						</li>
 					</ul>
 				</div>

@@ -30,20 +30,28 @@ $response["billing_address"]            = $_REQUEST['billing_address'];
 $response["shipping_address"]           = $_REQUEST['shipping_address'];
 
 
-$response["preferred_courier_service"]  = $_REQUEST['other_corier'];
+$response["remarks"]  = $_REQUEST['remarks'];
+$response["discount_percent"]  = $_REQUEST['discount_percent'];
+$response["billing_city"]  = $_REQUEST['billing_city'];
+$response["billing_state"]  = $_REQUEST['billing_state'];
+$response["billing_pin"]  = $_REQUEST['billing_pin'];
+$response["shipping_city"]  = $_REQUEST['shipping_city'];
+$response["shipping_state"]  = $_REQUEST['shipping_state'];
+$response["shipping_pin"]  = $_REQUEST['shipping_pin']; 
 
 $cart_details=count($response["cart_details"]);
 
 if ( $cart_details>0) {
-    if ($response["preferred_courier_service"]=='') {
+/*    if ($response["preferred_courier_service"]=='') {
      $response["status"] = FALSE;
     $response["msg"] = "Please enter your Order instructions.";  
    echo json_encode($response);
     } else {
         $response["status"] = TRUE;
         echo json_encode($response);
-    }
-   
+    }*/
+        $response["status"] = TRUE;
+        echo json_encode($response);
 }
 else{
    $response["status"] = FALSE;

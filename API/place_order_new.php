@@ -34,7 +34,17 @@ $lcod= $orderchk_array[0]['generate_no'];
 $total_bill_amount = $aa["total_bill_amount"];
 $billing_address = $aa["billing_address"];
 $shipping_address = $aa["shipping_address"];
-$preferred_courier_service = $aa["preferred_courier_service"];
+$remarks = $aa["remarks"];
+ 
+$discount_percent  = $aa['discount_percent'];
+$billing_city  = $aa['billing_city'];
+$billing_state  = $aa['billing_state'];
+$billing_pin  = $aa['billing_pin'];
+$shipping_city  = $aa['shipping_city'];
+$shipping_state  = $aa['shipping_state'];
+$shipping_pin  = $aa['shipping_pin']; 
+
+
 
 //  Stock check start
 
@@ -108,7 +118,9 @@ $amount =  $cart["amount"];
  if (!empty($product_id) && !empty($customer_id) && !empty($product_details_id) && !empty($set) && !empty($piece)&& !empty($mrp) && !empty($amount) ) {
  $get_generate_no= $Product->product_display($db->tbl_pre . "order_master", array(), "WHERE generate_no ='".$generate_no."'  " );
 if (count($get_generate_no)==0) {
-  $order_add = $db->insert('order_master', array('generate_no'=>$generate_no,'customer_id'=>rep($customer_id),'total_bill_amount'=>rep($total_bill_amount),'billing_address'=>rep($billing_address),'shipping_address'=>rep($shipping_address),'preferred_courier_service'=>rep($preferred_courier_service),'order_status'=>rep('Ordered') ));
+
+  $order_add = $db->insert('order_master', array('generate_no'=>$generate_no,'customer_id'=>rep($customer_id),'total_bill_amount'=>rep($total_bill_amount),'billing_address'=>rep($billing_address),'shipping_address'=>rep($shipping_address),'remarks'=>rep($remarks),'discount_percent'=>rep($discount_percent),'billing_city'=>rep($billing_city),'billing_state'=>rep($billing_state),'billing_pin'=>rep($billing_pin),'shipping_city'=>rep($shipping_city),'shipping_state'=>rep($shipping_state),'shipping_pin'=>rep($shipping_pin),'order_status'=>rep('Ordered') ));
+
 }
 
 $name_value = array('generate_no'=>$generate_no,'product_id' => rep($product_id), 'customer_id' => rep($customer_id), 'product_details_id' => rep($product_details_id), 'total_set' =>  ($set), 'mrp' => rep($mrp),'amount'=>rep($amount), 'order_status'=>rep($order_status));
@@ -212,11 +224,11 @@ $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http
           <tr style="font-size:14px;border-top: 1px solid #000;">
             <td valign="top">To</td>
             <td colspan="3" valign="top">
-                <br/>'.$order_array[0]["Company_name"].'<br/>'.$address.'<br/>GSTIN No.:'.$order_array[0]["vat_no"].'<br/>PAN :'.$order_array[0]["pan_no"].'
+                <br/>'.$order_array[0]["Company_name"].'<br/>'.$address.'<br/>GSTIN No.:'.$order_array[0]["gst_no"].'<br/>PAN :'.$order_array[0]["pan_no"].'
 
             </td>
             <td colspan="4" valign="top" style="border-left: 1px solid #000;">
-                <br/><span style="width:68px;">Order No. :</span> '.$order_array[0]["generate_no"].'<br/><span style="width:68px;">Date :</span> '.date('F d, Y',strtotime($order_array[0]["order_Date"])).'<br/><span style="width:68px;">Transport :</span> '.$order_array[0]["preferred_courier_service"].'
+                <br/><span style="width:68px;">Order No. :</span> '.$order_array[0]["generate_no"].'<br/><span style="width:68px;">Date :</span> '.date('F d, Y',strtotime($order_array[0]["order_Date"])).'<br/><span style="width:68px;">Remarks :</span> '.$order_array[0]["remarks"].'
             </td>
           </tr>
           <tr style="border-bottom: 1px solid #000;">
