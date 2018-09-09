@@ -5,12 +5,13 @@ $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'add';
 if ($_REQUEST['submit'] == 'Submit') {
 	$product_category_id	= $_REQUEST['product_category_id'];
 	$product_group_name = $_REQUEST['product_group_name'];
+	$product_hsn = $_REQUEST['product_hsn'];
  
 } else {
 	$product_group_name = '';
 }
 if ($_REQUEST['submit'] == 'Submit') {
-	$name_value = array('product_category_id'=>rep($product_category_id), 'product_group_name' => rep($product_group_name) );
+	$name_value = array('product_category_id'=>rep($product_category_id), 'product_group_name' => rep($product_group_name), 'product_hsn' => rep($product_hsn) );
 	// product_group Add //
 	if ($action == "add") {
 		$product_group->product_group_add($name_value, "Product group added successfully. Please enter another.", "Sorry, nothing is added.", "Sorry, Product group name is already added. Please use another name.");
@@ -77,6 +78,14 @@ $product_category_array = $product_category->Product_category_display($db->tbl_p
 								<label class="col-sm-2 control-label">Name</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Enter ..." name="product_group_name" id="product_group_name"  data-validation-engine="validate[required]" value="<?php echo $product_group_array[0]['product_group_name']; ?>" />
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">HSN</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Enter ..." name="product_hsn" id="product_hsn"  data-validation-engine="validate[required]" value="<?php echo $product_group_array[0]['product_hsn']; ?>" />
 								</div>
 							</div>
 						</div><!-- /.box-body -->

@@ -1,7 +1,7 @@
 <?php
 include "../../includes/settings.php";
 include "../../includes/class_call_one_file.php";
-$aColumns = array('zct.order_id', 'lt.customer_name', 'zct.generate_no', 'zct.preferred_courier_service', 'zct.total_bill_amount', 'zct.order_status');
+$aColumns = array('zct.order_id', 'lt.customer_name', 'zct.generate_no', 'zct.order_Date', 'zct.total_bill_amount', 'zct.order_status');
 $sIndexColumn = "zct.order_id";
 $sTable = $db->tbl_pre . "order_master zct, " . $db->tbl_pre . "customer_tbl lt " ;
 $sWhere = "WHERE zct.customer_id=lt.customer_id  ";
@@ -64,7 +64,12 @@ for ($j = 0; $j < count($aRow); $j++) {
 	$row = array();
 	for ($i = 0; $i < count($aColumns); $i++) {
 		if ($aColumns[$i] != ' ') {
-			$row[] = repc($aRow[$j][$i]);
+if ($aColumns[$i] == 'zct.order_Date') {
+$row[] = repc(date('M-d-Y',strtotime($aRow[$j][$i])));
+}else{
+	$row[] = repc($aRow[$j][$i]);
+}
+			
 		}
 	}
 	$output['aaData'][] = $row;

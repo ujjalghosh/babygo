@@ -40,7 +40,7 @@ $_SESSION['order_msg'] = ""; ?>
 									<th>ID</th>									
 									<th>Customer Name</th>
 									<th>Order No</th>
-									<th>Courier</th>
+									<th>Order Date</th>
 									<th>Total Amount</th>
 									<th>Status</th>
 									<th>Option</th>

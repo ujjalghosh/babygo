@@ -42,6 +42,7 @@ $_SESSION['Product_group_msg'] = ""; ?>
 									<th>ID</th>	
 									<th>Group For</th>								
 									<th>Name</th>
+									<th>HSN</th>
 									<th>Status</th>
 									<th>Option</th>
 								</tr>

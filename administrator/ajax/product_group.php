@@ -1,7 +1,7 @@
 <?php
 include "../../includes/settings.php";
 include "../../includes/class_call_one_file.php";
-$aColumns = array('zct.product_group_id', 'lt.category_name', 'zct.product_group_name', 'zct.product_group_status');
+$aColumns = array('zct.product_group_id', 'lt.category_name', 'zct.product_group_name','zct.product_hsn', 'zct.product_group_status');
 $sIndexColumn = "zct.product_group_id";
 $sTable = $db->tbl_pre . "product_group_tbl zct, " . $db->tbl_pre . "category_tbl lt";
 $sWhere = "WHERE zct.product_category_id=lt.category_id";

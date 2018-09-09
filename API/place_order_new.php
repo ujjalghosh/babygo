@@ -27,7 +27,7 @@ $lcod= $orderchk_array[0]['generate_no'];
    $generate_no = $nres."00".$num."/".$financial_year;
     }else{
       //ICPL/O/001/17-18
-   $generate_no="ICPL/O/"."001"."/".$financial_year; 
+   $generate_no="BBGO/O/"."001"."/".$financial_year; 
 } 
 
 }

@@ -229,13 +229,13 @@ if ($page_name == 'manage_product_group.php') {
       "aoColumnDefs": [
       {
        "bSortable": false,
-       "aTargets": [ 4 ] ,
+       "aTargets": [ 5 ] ,
        "mData": "download_link",
        "mRender": function ( data, type, full ) {
-        if(full[3]=='Inactive'){
+        if(full[4]=='Inactive'){
          var atbu='inactive';
        }
-       return '<a href="add_product_group.php?product_group_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a><a href="javascript:status_update('+full[0]+',\''+full[3]+'\',\'manage_product_group.php\')" title="Change Status"><i class="fa fa-fw fa-lightbulb-o '+atbu+'"></i></a><a href="javascript:del('+full[0]+',\'manage_product_group.php\',\'Franchise\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
+       return '<a href="add_product_group.php?product_group_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a><a href="javascript:status_update('+full[0]+',\''+full[4]+'\',\'manage_product_group.php\')" title="Change Status"><i class="fa fa-fw fa-lightbulb-o '+atbu+'"></i></a><a href="javascript:del('+full[0]+',\'manage_product_group.php\',\'Franchise\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
      }
    },
    {
