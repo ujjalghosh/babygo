@@ -77,21 +77,28 @@ $order_query = $db->query("select * from " . $db->tbl_pre . "orders_tbl where cu
 							    <tbody>
 							    <?php    for($d=0;$d<count($order_array);$d++) {  
 $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " . $db->tbl_pre . "product_size_tbl sz ", array(), "WHERE pdt.product_id ='".$order_array[$d]["product_id"]."' and pdt.product_details_id='".$order_array[$d]["product_details_id"]."' and sz.product_size_id=pdt.size_id " );
+
 							    	?>
 							      <tr>
+							      	<?php 
+$total=0;
+$total= $pddetails[0]["style_mrp_for_size"]*$order_array[$d]["total_set"]*$pddetails[0]["style_set_qty"];
+$total=$total*$discount_percent/100;
+ ?>
 							<input type="hidden" id="product_details_id_<?php echo $d;?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_product_details_id_<?php echo $d;?>" value="<?php echo $pddetails[0]["product_details_id"]; ?>">
 						    <input type="hidden" name="<?php echo $orderchk_array[$k]["product_id"];?>_style_set_qty_<?php echo $d;?>" id="style_set_qty_<?php echo $d;?>" value="<?php echo $pddetails[0]["style_set_qty"]; ?>">				
 						    <input type="hidden" name="<?php echo $orderchk_array[$k]["product_id"];?>_stock_in_hand_<?php echo $d;?>" id="stock_in_hand<?php echo $d;?>" value="<?php echo $pddetails[0]["stock_in_hand"]; ?>">	
-						    <input type="hidden" readonly="true" id="amount_<?php echo $d; ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_amount_<?php echo $d; ?>" value="<?php echo  $order_array[$d]["amount"]; ?>">
+						    <input type="hidden" readonly="true" id="amount_<?php echo $d; ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_amount_<?php echo $d; ?>" value="<?php echo  $total; ?>">
 						    <input type="hidden" readonly="true" id="style_mrp_for_size<?php echo $d; ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_mrp_<?php echo $d; ?>" value="<?php echo $pddetails[0]["style_mrp_for_size"]; ?>">						    
 						    <input type="hidden" readonly="true" id="piece<?php echo $d; ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_piece_<?php echo $d; ?>"  value="<?php echo $pddetails[0]["style_set_qty"]; ?>">
 
 							        <td align="left"><?php echo $pddetails[0]["size_description"]; ?></td>
-							        <td> <input class="set_qty" data-id="<?php echo $d;?>" type="text" value="<?php echo $order_array[$d]["total_set"] ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_set_<?php echo $d; ?>"></td>
-							        <td><?php echo $order_array[$d]["piece"] ?></td>
-							        <td><?php echo $order_array[$d]["mrp"] ?></td>
-							        <td align="right"><?php echo $order_array[$d]["amount"] ?></td>
-							        <?php  $total_bill_amount= $total_bill_amount + $order_array[$d]["amount"]; ?>
+							        <td> <input class="set_qty" data-id="<?php echo $d;?>" data-pid="<?php echo $orderchk_array[$k]["product_id"];?>" type="text" value="<?php echo $order_array[$d]["total_set"] ?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_set_<?php echo $d; ?>"></td>
+							        <td><?php echo $pddetails[0]["style_set_qty"]*$order_array[$d]["total_set"] ?></td>
+
+							        <td><?php echo $pddetails[0]["style_mrp_for_size"]; ?></td>
+							        <td align="right"><?php echo $total; ?></td>
+							        <?php  $total_bill_amount= $total_bill_amount + $total; ?>
 							      </tr>
 
 								<?php } ?>

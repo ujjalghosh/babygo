@@ -23,8 +23,8 @@ $order_num = $db->total($orderchk_query);
       $product_details_id =   $value['product_details_id'];
       $set                =   $value['set'];
       $mrp                =   $value['mrp'];
-      $piece                =   $value['piece'];
-      $amount                =   $value['amount'];
+      $piece              =   $value['piece'];
+      $amount             =   $value['amount'];
 
  if (!empty($product_id) && !empty($customer_id) && !empty($product_details_id)  && !empty($mrp)&& !empty($piece) && !empty($amount) ) {
   $product = array();
