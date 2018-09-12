@@ -83,7 +83,8 @@ $pddetails=$Product->product_display($db->tbl_pre . "product_details_tbl pdt, " 
 							      	<?php 
 $total=0;
 $total= $pddetails[0]["style_mrp_for_size"]*$order_array[$d]["total_set"]*$pddetails[0]["style_set_qty"];
-$total=$total*$discount_percent/100;
+$dis=$total*$discount_percent/100;
+$total=$total-$dis;
  ?>
 							<input type="hidden" id="product_details_id_<?php echo $d;?>" name="<?php echo $orderchk_array[$k]["product_id"];?>_product_details_id_<?php echo $d;?>" value="<?php echo $pddetails[0]["product_details_id"]; ?>">
 						    <input type="hidden" name="<?php echo $orderchk_array[$k]["product_id"];?>_style_set_qty_<?php echo $d;?>" id="style_set_qty_<?php echo $d;?>" value="<?php echo $pddetails[0]["style_set_qty"]; ?>">				

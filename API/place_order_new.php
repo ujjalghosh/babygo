@@ -112,6 +112,8 @@ $set =  $cart["set"];
 $piece =  $cart["piece"];
 $mrp =  $cart["mrp"];
 $amount =  $cart["amount"];
+$discount_amount = ($set * $mrp * $piece) - $amount;
+$actual_amount = $set * $mrp * $piece;
 
  
 
@@ -123,7 +125,7 @@ if (count($get_generate_no)==0) {
 
 }
 
-$name_value = array('generate_no'=>$generate_no,'product_id' => rep($product_id), 'customer_id' => rep($customer_id), 'product_details_id' => rep($product_details_id), 'total_set' =>  ($set), 'mrp' => rep($mrp),'amount'=>rep($amount), 'order_status'=>rep($order_status));
+$name_value = array('generate_no'=>$generate_no,'product_id' => rep($product_id), 'customer_id' => rep($customer_id), 'product_details_id' => rep($product_details_id), 'total_set' =>  ($set), 'mrp' => rep($mrp),'amount'=>rep($amount),'discount_amount'=>rep($discount_amount),'actual_amount'=>rep($actual_amount), 'order_status'=>rep($order_status));
  
 
   $order_confirm = $db->update('orders_tbl', $name_value, "product_id='" . $product_id . "' and customer_id='" . $customer_id . "'  and product_details_id='" . $product_details_id . "' and order_status='Cart' ");

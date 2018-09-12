@@ -126,6 +126,8 @@ $(document).ready(function(){
 $('#order_submit').on("click", function(event) {
 event.preventDefault();
 //alert($("#place_order").serialize());
+swal('Please wait')
+swal.showLoading()
 $.ajax({
 type: "POST",
 url: 'ajax/product_order_convert_json.php',
@@ -370,15 +372,15 @@ var Pcs= $("#style_set_qty_"+row+"").val();
 var style_mrp= $("#style_mrp_for_size"+row+"").val();
 var stock_in_hand=Number($("#stock_in_hand"+row+"").val());
 var discount= $("#discount_percent").val();
-console.log(set_qty);
-console.log(stock_in_hand);
+var dis=0;
 
 if(set_qty<=stock_in_hand){
 var total= style_mrp*set_qty*Pcs;
 //var total= style_mrp*set_qty;
 if (discount>0) {
-total=total*discount/100;
+  dis=total*discount/100;
 }
+total=total-dis;
 total =Number(total.toFixed(2));
 //alert(total);
 $("#amt_"+row+"").autoNumeric('init');
@@ -407,8 +409,7 @@ var Pcs= $("#style_set_qty_"+row+"").val();
 var style_mrp= $("#style_mrp_for_size"+row+"").val();
 var stock_in_hand=Number($("#stock_in_hand"+row+"").val());
 var discount= $("#discount_percent").val();
-console.log(set_qty);
-console.log(stock_in_hand);
+
 
 if(set_qty<=stock_in_hand){
 var total= style_mrp*set_qty*Pcs;

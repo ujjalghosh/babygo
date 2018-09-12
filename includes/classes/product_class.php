@@ -99,13 +99,16 @@ goods_movement_summary();
 		if ($product_duplicate_check_num == 0) {
 			$product_update = $this->db->update('product_tbl', $product_array, "product_id='" . $product_id . "'");
  if ($product_update) {
-$this->db->delete("product_details_tbl", array("product_id" => $product_id));
+ $details=	$this->product_display($this->db->tbl_pre . "product_details_tbl", array(), "WHERE product_id=" . $product_id . "");
+ 	$product_details_id=$details[0]['product_details_id'];
+//$this->db->delete("product_details_tbl", array("product_id" => $product_id));
 			$size_id = $_REQUEST['size_id'];
 			$style_set_qty = $_REQUEST['style_set_qty'];
 			$style_mrp_for_size = $_REQUEST['style_mrp_for_size'];
 
 			$detalis_value = array('product_id' => rep($product_id), 'style_set_qty' => rep($style_set_qty), 'style_mrp_for_size' => rep($style_mrp_for_size),'size_id' => rep($size_id) );	 
-			 $this->db->insert('product_details_tbl', $detalis_value);
+			$this->db->update('product_details_tbl', $detalis_value, "product_details_id='" . $product_details_id . "'");
+			 //$this->db->insert('product_details_tbl', $detalis_value);
 
 
  	$file_up_count++;
