@@ -161,7 +161,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
  <li class="treeview <?php echo $page_name == 'manage_order.php' || $page_name == 'add_order.php' ? 'active' : ''; ?>">
   <a href="#">
    <i class="fa fa-location-arrow"></i>
-   <span>Order Module</span>
+   <span>Order / Invoice Module</span>
    <i class="fa fa-angle-left pull-right"></i>
  </a>
  <ul class="treeview-menu">
@@ -171,18 +171,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
   
 </li>
 
- <li class="treeview <?php echo $page_name == 'manage_invoice.php' || $page_name == 'add_invoice.php' ? 'active' : ''; ?>">
-  <a href="#">
-   <i class="fa fa-location-arrow"></i>
-   <span> Invoice Module</span>
-   <i class="fa fa-angle-left pull-right"></i>
- </a>
- <ul class="treeview-menu">
-   <li class="<?php echo $page_name == 'add_invoice.php' ? 'active' : ''; ?>"><a href="add_invoice.php"><i class="fa fa-circle-o"></i> Add Invoice</a></li>
-  <!--  <li class="<?php echo $page_name == 'manage_invoice.php' ? 'active' : ''; ?>"><a href="manage_invoice.php"><i class="fa fa-circle-o"></i> Manage Invoice</a></li> -->
- </ul>
-  
-</li>
+ 
 
 
  <li class="treeview <?php echo $page_name == 'manage_customer.php' || $page_name == 'add_customer.php' ? 'active' : ''; ?>">

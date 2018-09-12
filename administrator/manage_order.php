@@ -91,4 +91,68 @@ $_SESSION['order_msg'] = ""; ?>
     </div>
   </div>
   
-</div>
+ 
+ <!-- invoice -->
+
+   <div class="modal fade" id="order_invoice" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header modal-header-primary">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Invoice</h4>
+        </div>
+        <div class="modal-body">
+         					<div class="box-body table-responsive">
+						<table class="table table-bordered table-hover" id="style_details">
+							<thead>
+								<tr>
+									<th>SL</th>									
+									<th>Description</th>
+									<th>Style No</th>									
+									<th>Size</th>
+									<th>Colour</th>
+									<th>Set Ordered</th>
+									<th>Set Delivered</th>
+									<th>Set to be Invoiced/ Despatched</th>
+									<th>Pcs</th>
+									<th>MRP</th>
+									<th>Disc%</th>
+									<th>Discount Amount</th>
+									<th>Net Rate (MRP-Discount)</th>
+									<th>Amt</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
+<td><a href="javascript:del()" title="Delete"><i class="fa fa-fw fa-close"></i></a></td>
+									
+								</tr>
+							</tbody>
+						</table>
+					</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+

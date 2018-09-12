@@ -546,7 +546,7 @@ if ($page_name == 'manage_order.php') {
         if(full[2]=='Inactive'){
          var atbu='inactive';
        }
-       return '<a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a>&nbsp;<a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-eye '+atbu+'"></i></a><a href="javascript:del('+full[0]+',\'manage_order.php\',\'Color\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
+       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a>&nbsp; <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a>&nbsp; <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-eye '+atbu+'"></i></a>&nbsp; <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
      }
    },
    {
@@ -647,6 +647,10 @@ function status_update(aa, bb, cc) {
   location.href = cc + "?cid=" + aa + "&action=status&current_status=" + bb;
 }
 
+
+function invoice_order(aa, bb, cc){
+   $("#order_invoice").modal();
+}
 
 function view_order_details(aa, bb, cc) {
         $("#styles_pop").modal();
