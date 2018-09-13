@@ -660,12 +660,32 @@ function invoice_order(aa, bb, cc){
   dataType: "json"
   }).done(function(value) {
     if (value.status==true) {
+var k=0;
+      if(value.order_row.length>0){
+for (i=0; i < value.order_row.length; i++){
+var row=''; k++; var cls= k%2==0? 'warning' : 'danger';
+row =' <tr class="'+cls+'" role="row">' +
+'<td><input type="hidden" name="sl_'+k+'" value="'+k+'" ><span>'+k+'</span></td>'+
+'<td><input type="hidden" name="product_name_'+k+'" value="'+value.order_row[i].product_name+'" ><span>'+value.order_row[i].product_name+'</span></td>'+
+'<td><input type="hidden" name="style_no_'+k+'" value="'+value.order_row[i].style_no+'"><span>'+value.order_row[i].style_no+'</span></td>'+
+'<td><input type="hidden" name="size_'+k+'" value="'+value.order_row[i].size_description+'"><span>'+value.order_row[i].size_description+'</span></td>'+
+'<td><input type="hidden" name="colour_'+k+'" value="'+value.order_row[i].style_color_qty+'"><span >'+value.order_row[i].style_color_qty+'</span></td>'+
+'<td><input type="hidden" name="set_order_'+k+'" value="'+value.order_row[i].total_set+'"><span"> '+value.order_row[i].total_set+' </span></td>'+
+'<td><input type="hidden" name="set_delevered_'+k+'" value="'+value.order_row[i].set_delevered+'"><span >'+value.order_row[i].set_delevered+'</span></td>'+
+'<td><input type="text" class="set_dispatch" name="set_dispatch_'+k+'" id="set_dispatch_'+k+'"> </td>'+
+'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
+'<td><input type="hidden" name="mrp_'+k+'" id="mrp_'+k+'" value="'+value.order_row[i].mrp+'"><span id="c_sl_1"></span></td>'+
+'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
+'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
+'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
+'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
+'<td><a href="javascript:del()" title="Delete"><i class="fa fa-fw fa-close"></i></a></td>'+
+                  
+                '</tr>';
 
-/*  jQuery('#flat_id').val(value.flat_id);
-  jQuery('#flat_name').val(value.flat_name);
-  jQuery('#flat_size').val(value.flat_size);
-  jQuery('#amount_due').val(value.amount_due);*/
-  
+jQuery('#invoice_create tbody').append(row); 
+}
+      } 
 
 }else{
   alert(value.msg);
@@ -899,6 +919,11 @@ $(document).ready(function(){
                // $('input[type="file"]').imageuploadify();
             })
         </script>
+        <style>
+       .set_dispatch{width: 68px;
+
+align-content: center;}
+        </style>
 
 </body>
 </html>

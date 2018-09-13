@@ -105,7 +105,7 @@ $_SESSION['order_msg'] = ""; ?>
         </div>
         <div class="modal-body">
          					<div class="box-body table-responsive">
-						<table class="table table-bordered table-hover" id="style_details">
+						<table class="table table-bordered table-hover" id="invoice_create">
 							<thead>
 								<tr>
 									<th>SL</th>									
@@ -126,24 +126,7 @@ $_SESSION['order_msg'] = ""; ?>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>
-<td><a href="javascript:del()" title="Delete"><i class="fa fa-fw fa-close"></i></a></td>
-									
-								</tr>
+
 							</tbody>
 						</table>
 					</div>
