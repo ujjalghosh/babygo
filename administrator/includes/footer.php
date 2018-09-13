@@ -652,6 +652,26 @@ function status_update(aa, bb, cc) {
 
 function invoice_order(aa, bb, cc){
    $("#order_invoice").modal();
+
+  jQuery.ajax({
+  type: "POST",
+  url: "php/fetch_order_invoice.php",
+  data: {order_no: bb},
+  dataType: "json"
+  }).done(function(value) {
+    if (value.status==true) {
+
+/*  jQuery('#flat_id').val(value.flat_id);
+  jQuery('#flat_name').val(value.flat_name);
+  jQuery('#flat_size').val(value.flat_size);
+  jQuery('#amount_due').val(value.amount_due);*/
+  
+
+}else{
+  alert(value.msg);
+}
+
+  });
 }
 
 function view_order_details(aa, bb, cc) {
