@@ -531,12 +531,14 @@ if ($page_name == 'manage_notification.php') {
 
 if ($page_name == 'manage_order.php') {
   ?>
-     jQuery('#example').dataTable( {
+  var table = jQuery('#example');
+        var dataTable =  table.dataTable( {
       "processing": true,
       "serverSide": true,
       "iDisplayLength": <?php echo Pagination_Number; ?>,
       "sAjaxSource": "ajax/product_order.php",
-      "order": [[ 1, "asc" ]],
+      "order": [[ 3, "desc" ]],
+      "stripeClasses": [ 'success', 'info' ],
       "aoColumnDefs": [
       {
        "bSortable": false,
@@ -546,7 +548,7 @@ if ($page_name == 'manage_order.php') {
         if(full[2]=='Inactive'){
          var atbu='inactive';
        }
-       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a>&nbsp; <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a>&nbsp; <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-eye '+atbu+'"></i></a>&nbsp; <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
+       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a> <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a> <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-fw fa-eye '+atbu+'"></i></a> <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
      }
    },
    {
@@ -671,7 +673,12 @@ function view_order_details(aa, bb, cc) {
        "aTargets": [ 7 ] ,
        
  
-    }
+    },
+   {
+                "targets": [ 0 ],
+                "visible": false,
+                "searchable": false
+            }
     ]
 
   } ); 

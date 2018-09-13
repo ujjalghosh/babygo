@@ -47,7 +47,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
         <link href="assets/css/email-editor.bundle.min.css" rel="stylesheet" />
         <link href="assets/css/colorpicker.css" rel="stylesheet" />
       </head>
-      <body class="skin-black sidebar-mini">
+      <body class="skin-black sidebar-mini sidebar-collapse">
        <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
