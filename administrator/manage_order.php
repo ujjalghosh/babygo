@@ -96,7 +96,7 @@ $_SESSION['order_msg'] = ""; ?>
 
    <div class="modal fade" id="order_invoice" role="dialog">
     <div class="modal-dialog modal-lg">
-    
+    <form id="frm_invoice_create">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header modal-header-primary">
@@ -105,6 +105,7 @@ $_SESSION['order_msg'] = ""; ?>
         </div>
         <div class="modal-body">
          					<div class="box-body table-responsive">
+         						
 						<table class="table table-bordered table-hover" id="invoice_create">
 							<thead>
 								<tr>
@@ -129,13 +130,15 @@ $_SESSION['order_msg'] = ""; ?>
 
 							</tbody>
 						</table>
+						
 					</div>
         </div>
         <div class="modal-footer">
+        <button type="submit" class="btn btn-success"  >Save</button>	
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
-      
+      </form>
     </div>
   </div>
 

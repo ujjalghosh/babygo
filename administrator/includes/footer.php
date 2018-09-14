@@ -33,6 +33,8 @@
 <script src="dist/js/jquery.validationEngine.js"></script>
 <script src="dist/js/jquery.validationEngine-en.js"></script>
 <script src="dist/js/jquery-ui.js"></script>
+<script src="assets/js/autoNumeric.js"></script>
+
 <script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="plugins/timepicker/bootstrap-timepicker.js" type="text/javascript"></script>
 <link href="dist/css/imageuploadify.min.css" rel="stylesheet">
@@ -651,6 +653,7 @@ function status_update(aa, bb, cc) {
 
 
 function invoice_order(aa, bb, cc){
+  jQuery('#invoice_create tbody').empty();
    $("#order_invoice").modal();
 
   jQuery.ajax({
@@ -663,28 +666,37 @@ function invoice_order(aa, bb, cc){
 var k=0;
       if(value.order_row.length>0){
 for (i=0; i < value.order_row.length; i++){
+if(value.order_row[i].set_due>0){
 var row=''; k++; var cls= k%2==0? 'warning' : 'danger';
 row =' <tr class="'+cls+'" role="row">' +
+'<input type="hidden" id="set_piece_'+k+'" value="'+value.order_row[i].piece+'" data-id="'+k+'">  <input type="hidden" id="set_mrp_'+k+'" value="'+value.order_row[i].mrp+'" data-id="'+k+'">   <input type="hidden" id="discount_percent_'+k+'" value="'+value.order_row[i].discount_percent+'" data-id="'+k+'">  <input type="hidden" id="stock_in_hand_'+k+'" value="'+value.order_row[i].stock_in_hand+'" data-id="'+k+'">'+
+
 '<td><input type="hidden" name="sl_'+k+'" value="'+k+'" ><span>'+k+'</span></td>'+
 '<td><input type="hidden" name="product_name_'+k+'" value="'+value.order_row[i].product_name+'" ><span>'+value.order_row[i].product_name+'</span></td>'+
 '<td><input type="hidden" name="style_no_'+k+'" value="'+value.order_row[i].style_no+'"><span>'+value.order_row[i].style_no+'</span></td>'+
 '<td><input type="hidden" name="size_'+k+'" value="'+value.order_row[i].size_description+'"><span>'+value.order_row[i].size_description+'</span></td>'+
 '<td><input type="hidden" name="colour_'+k+'" value="'+value.order_row[i].style_color_qty+'"><span >'+value.order_row[i].style_color_qty+'</span></td>'+
 '<td><input type="hidden" name="set_order_'+k+'" value="'+value.order_row[i].total_set+'"><span"> '+value.order_row[i].total_set+' </span></td>'+
-'<td><input type="hidden" name="set_delevered_'+k+'" value="'+value.order_row[i].set_delevered+'"><span >'+value.order_row[i].set_delevered+'</span></td>'+
-'<td><input type="text" class="set_dispatch" name="set_dispatch_'+k+'" id="set_dispatch_'+k+'"> </td>'+
-'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
-'<td><input type="hidden" name="mrp_'+k+'" id="mrp_'+k+'" value="'+value.order_row[i].mrp+'"><span id="c_sl_1"></span></td>'+
-'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
-'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
-'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
-'<td><input type="hidden" name="sl_1" id="sl_1"><span id="c_sl_1"></span></td>'+
-'<td><a href="javascript:del()" title="Delete"><i class="fa fa-fw fa-close"></i></a></td>'+
+'<td><input type="hidden" name="set_delevered_'+k+'" id="set_delevered_'+k+'"  value="'+value.order_row[i].set_delevered+'"><span >'+value.order_row[i].set_delevered+'</span></td>'+
+'<td><input type="text" class="set_dispatch" name="set_dispatch_'+k+'" id="set_dispatch_'+k+'" data-id="'+k+'" data-validation-engine="validate[custom[integer]]"> </td>'+
+'<td><input type="hidden" name="pcs_'+k+'" id="pcs_'+k+'"><span id="c_pcs_'+k+'"></span></td>'+
+'<td><input type="hidden" name="mrp_'+k+'" id="mrp_'+k+'" value="'+value.order_row[i].mrp+'"><span id="c_mrp_'+k+'">'+value.order_row[i].mrp+'</span></td>'+
+'<td><span id="c_discount_percent_'+k+'">'+value.order_row[i].discount_percent+'</span></td>'+
+'<td><input type="hidden" name="amount_discount_'+k+'" id="amount_discount_'+k+'"><span id="c_amount_discount_'+k+'"></span></td>'+
+'<td><input type="hidden" name="net_amount_'+k+'" id="net_amount_'+k+'"><span id="c_net_amount_'+k+'"></span></td>'+
+'<td><input type="hidden" name="grand_amount_'+k+'" id="grand_amount_'+k+'"><span id="c_grand_amount_'+k+'"></span></td>'+
+'<td><a href="javascript:delinvoicerow()" title="Delete"><i class="fa fa-fw fa-close"></i></a></td>'+
                   
                 '</tr>';
 
 jQuery('#invoice_create tbody').append(row); 
 }
+}
+    jQuery("#frm_invoice_create").validationEngine('attach', {
+      relative: true,
+      overflownDIV:"#divOverflown",
+      promptPosition:"topLeft"
+    });
       } 
 
 }else{
@@ -693,6 +705,53 @@ jQuery('#invoice_create tbody').append(row);
 
   });
 }
+
+
+$(document).on('keyup change','.set_dispatch',function(){
+var row= $(this).attr("data-id");
+var set_qty =Number($("#set_dispatch_"+row+"").val());
+var Pcs= $("#set_piece_"+row+"").val();
+var style_mrp= $("#set_mrp_"+row+"").val();
+var stock_in_hand=Number($("#stock_in_hand_"+row+"").val());
+var discount= $("#discount_percent_"+row+"").val();
+var dis=0; var grandtotal=0;
+if(set_qty<=stock_in_hand){
+var total= style_mrp*set_qty*Pcs;
+$("#net_amount_"+row+"").val(total);
+$("#c_net_amount_"+row+"").html(total);
+if (discount>0) {
+  dis=total*discount/100;
+}
+ grandtotal=(total-dis);
+ grandtotal =Number(grandtotal.toFixed(2));
+$("#amount_discount_"+row+"").val(dis);
+$("#c_amount_discount_"+row+"").autoNumeric('init');
+$("#c_amount_discount_"+row+"").autoNumeric('set',dis);
+$("#grand_amount_"+row+"").val(grandtotal);
+$("#c_grand_amount_"+row+"").html(grandtotal);
+var piece =Pcs*set_qty;
+$("#pcs_"+row+"").val(piece);
+$("#c_pcs_"+row+"").html(piece);
+}
+else{
+$("#set_dispatch_"+row+"").val(stock_in_hand);
+alert("Product is out for stock ");
+}
+
+});
+
+
+
+jQuery(document).on('submit','#frm_invoice_create',function(e){
+   e.preventDefault();
+   if (jQuery('#frm_invoice_create').validationEngine('validate') == true) { 
+
+
+}
+});
+
+
+
 
 function view_order_details(aa, bb, cc) {
         $("#styles_pop").modal();
