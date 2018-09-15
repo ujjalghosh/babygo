@@ -136,7 +136,7 @@ $_SESSION['order_msg'] = ""; ?>
 					</div>
         </div>
         <div class="modal-footer">
-        <button type="submit" class="btn btn-success"  >Save</button>	
+        <button type="submit" class="btn btn-success invoice_save"  >Save</button>	
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>

@@ -775,11 +775,11 @@ swal('Sorry',  data.msg,  'error');
 }
 
 },
-beforeSend: function(){
-jQuery(".page-loader").show();
+beforeSend: function(){ 
+jQuery(".invoice_save").attr("disabled", true);
 },
 complete: function(){
-setTimeout(function() {   jQuery(".page-loader").hide();  }, 2000);
+jQuery(".invoice_save").attr("disabled", false);
 
 }
 });

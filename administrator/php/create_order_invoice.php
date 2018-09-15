@@ -42,10 +42,18 @@ if (isset($_POST['total_row'])) {
 	$value =array("invoice_id"=>$invoice_id,"invoice_no"=>$invoice_no,"product_id"=>"".rep($product_id)."", "product_details_id"=>"".rep($product_details_id)."","hsn"=>"".rep($hsn)."","description"=>"".rep($description)."","style_no"=>"".rep($style_no)."","size"=>"".rep($size)."","colour"=>"".rep($colour)."","set_ordered"=>"".rep($set_order)."","set_dispatch"=>"".rep($set_dispatch)."","pcs"=>"".rep($pcs)."","mrp"=>"".rep($mrp)."","amount_discount"=>"".rep($amount_discount)."","net_amount"=>"".rep($net_amount)."","grand_amount"=>"".rep($grand_amount)."","discount_percent"=>"".rep($discount_percent)."");
 	
 	$db->insert('invoice_trns', $value);
+ 
+$date_of_transaction = date('Y-m-d');
+$goods_movement_array = array('product_id' => rep($product_id), 'date_of_transaction' => "".rep($date_of_transaction)."",'qty_out' => rep($set_dispatch),'reference_id' => rep($invoice_id),'reference_type' => 'sales','value_out'=> "".rep($grand_amount).""  );
+
+ 
+$goods_movement_add=$db->insert('goods_movement_register', $goods_movement_array);
+
+
  }
 	}
 }
-
+  goods_movement_summary();
 		$response['status']=true;
 		$response['msg']='Invoice is created successfully..';
 
