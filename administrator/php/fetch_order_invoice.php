@@ -4,12 +4,19 @@ include "../../includes/class_call_one_file.php";
 
 
 $order_no = $_REQUEST['order_no'];
-$invoice_sql = $db->query("SELECT ortm.generate_no AS order_no, 'hsn' AS hsn,`pt`.`product_name`,ort.product_details_id,ort.product_id,`pt`.`style_no`,`pst`.`size_description`,`pt`.`style_color_qty`,`ort`.`total_set`, IFNULL( set_delevered,0) AS set_delevered, (`ort`.`total_set` - IFNULL( set_delevered,0)) AS set_due ,`ort`.`piece`, `ort`.`mrp`,`ortm`.`discount_percent`, pdt.stock_in_hand FROM babygodb_order_master ortm INNER JOIN babygodb_orders_tbl ort ON ortm.generate_no=ort.generate_no LEFT JOIN babygodb_product_details_tbl pdt ON ort.product_details_id=pdt.product_details_id JOIN babygodb_product_size_tbl pst ON pdt.size_id=pst.product_size_id INNER JOIN babygodb_product_tbl pt ON ort.product_id=pt.product_id LEFT OUTER JOIN (SELECT IM.order_no, IFNULL(SUM(IT.set_dispatch),0) AS set_delevered,IT.product_id ,IT.product_details_id FROM babygodb_invoice_master AS IM LEFT JOIN babygodb_invoice_trns AS IT ON IT.invoice_no=IM.invoice_no ) as b ON b.order_no=ortm.generate_no AND b.product_id=pt.product_id AND b.product_details_id=pdt.product_details_id WHERE ortm.generate_no='".$order_no."' ", PDO::FETCH_BOTH);
+$invoice_sql = $db->query("SELECT ortm.generate_no AS order_no, 'hsn' AS hsn,`pt`.`product_name`,ort.product_details_id,ort.product_id,`pt`.`style_no`,`pst`.`size_description`,`pt`.`style_color_qty`,`ort`.`total_set`, IFNULL( set_delevered,0) AS set_delevered, (`ort`.`total_set` - IFNULL( set_delevered,0)) AS set_due ,`ort`.`piece`, `ort`.`mrp`,`ortm`.`discount_percent`, pdt.stock_in_hand FROM babygodb_order_master ortm INNER JOIN babygodb_orders_tbl ort ON ortm.generate_no=ort.generate_no LEFT JOIN babygodb_product_details_tbl pdt ON ort.product_details_id=pdt.product_details_id JOIN babygodb_product_size_tbl pst ON pdt.size_id=pst.product_size_id INNER JOIN babygodb_product_tbl pt ON ort.product_id=pt.product_id LEFT OUTER JOIN (SELECT IM.order_no, IFNULL(SUM(IT.set_dispatch),0) AS set_delevered,IT.product_id ,IT.product_details_id FROM babygodb_invoice_master AS IM LEFT JOIN babygodb_invoice_trns AS IT ON IT.invoice_no=IM.invoice_no GROUP BY IT.product_id, IT.product_details_id   ) as b ON b.order_no=ortm.generate_no AND b.product_id=pt.product_id AND b.product_details_id=pdt.product_details_id WHERE ortm.generate_no='".$order_no."' ", PDO::FETCH_BOTH);
 
 
 
 
-  $charge_total= $db->total($invoice_sql); 
+
+/*$invoice_sql = $db->query("SELECT IM.invoice_no,IFNULL(SUM(IT.set_dispatch),0)AS set_delevered,(`ort`.`total_set` - IFNULL( set_dispatch,0)) AS set_due , ortm.generate_no AS order_no, 'hsn' AS hsn,`pt`.`product_name`,ort.product_details_id,ort.product_id,`pt`.`style_no`,`pst`.`size_description`,`pt`.`style_color_qty`,`ort`.`total_set`,   `ort`.`piece`, `ort`.`mrp`,`ortm`.`discount_percent`, pdt.stock_in_hand FROM babygodb_order_master ortm INNER JOIN babygodb_orders_tbl ort ON ortm.generate_no=ort.generate_no LEFT JOIN babygodb_product_details_tbl pdt ON ort.product_details_id=pdt.product_details_id JOIN babygodb_product_size_tbl pst ON pdt.size_id=pst.product_size_id INNER JOIN babygodb_product_tbl pt ON ort.product_id=pt.product_id LEFT OUTER JOIN babygodb_invoice_master IM ON IM.order_no=ortm.generate_no LEFT OUTER JOIN babygodb_invoice_trns AS IT ON IT.invoice_no=IM.invoice_no AND IT.product_id=pt.product_id AND IT. product_details_id=pdt.product_details_id 
+
+WHERE ortm.generate_no='".$order_no."' GROUP BY IT.product_details_id, IT.product_id ", PDO::FETCH_BOTH);*/
+
+
+
+$charge_total= $db->total($invoice_sql); 
 if($charge_total>0){
 $invoice_row = $db->result($invoice_sql); 
 $response["order_row"] = array();
