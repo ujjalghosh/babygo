@@ -34,6 +34,8 @@
 <script src="dist/js/jquery.validationEngine-en.js"></script>
 <script src="dist/js/jquery-ui.js"></script>
 <script src="assets/js/autoNumeric.js"></script>
+  <link rel="stylesheet" type="text/css" href="dist/css/sweetalert.css">
+<script type="text/javascript" src="dist/js/sweetalert.min.js"></script>
 
 <script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="plugins/timepicker/bootstrap-timepicker.js" type="text/javascript"></script>
@@ -665,11 +667,13 @@ function invoice_order(aa, bb, cc){
     if (value.status==true) {
 var k=0;
       if(value.order_row.length>0){
+        jQuery('#total_row').val(value.total_row); 
+        jQuery('#order_no').val(value.order_no);             
 for (i=0; i < value.order_row.length; i++){
 if(value.order_row[i].set_due>0){
 var row=''; k++; var cls= k%2==0? 'warning' : 'danger';
 row =' <tr class="'+cls+'" role="row">' +
-'<input type="hidden" id="set_piece_'+k+'" value="'+value.order_row[i].piece+'" data-id="'+k+'">  <input type="hidden" id="set_mrp_'+k+'" value="'+value.order_row[i].mrp+'" data-id="'+k+'">   <input type="hidden" id="discount_percent_'+k+'" value="'+value.order_row[i].discount_percent+'" data-id="'+k+'">  <input type="hidden" id="stock_in_hand_'+k+'" value="'+value.order_row[i].stock_in_hand+'" data-id="'+k+'">'+
+'<input type="hidden" id="set_piece_'+k+'" value="'+value.order_row[i].piece+'" data-id="'+k+'">  <input type="hidden" id="set_mrp_'+k+'" value="'+value.order_row[i].mrp+'" data-id="'+k+'">   <input type="hidden" id="discount_percent_'+k+'" value="'+value.order_row[i].discount_percent+'" data-id="'+k+'">  <input type="hidden" id="stock_in_hand_'+k+'" value="'+value.order_row[i].stock_in_hand+'" data-id="'+k+'"> <input type="hidden" id="set_due_'+k+'" value="'+value.order_row[i].set_due+'" data-id="'+k+'"> <input type="hidden" name="product_id_'+k+'" value="'+value.order_row[i].product_id+'" > <input type="hidden" name="product_details_id_'+k+'" value="'+value.order_row[i].product_details_id+'" <input type="hidden" name="hsn_'+k+'" value="'+value.order_row[i].hsn+'">'+
 
 '<td><input type="hidden" name="sl_'+k+'" value="'+k+'" ><span>'+k+'</span></td>'+
 '<td><input type="hidden" name="product_name_'+k+'" value="'+value.order_row[i].product_name+'" ><span>'+value.order_row[i].product_name+'</span></td>'+
@@ -685,7 +689,6 @@ row =' <tr class="'+cls+'" role="row">' +
 '<td><input type="hidden" name="amount_discount_'+k+'" id="amount_discount_'+k+'"><span id="c_amount_discount_'+k+'"></span></td>'+
 '<td><input type="hidden" name="net_amount_'+k+'" id="net_amount_'+k+'"><span id="c_net_amount_'+k+'"></span></td>'+
 '<td><input type="hidden" name="grand_amount_'+k+'" id="grand_amount_'+k+'"><span id="c_grand_amount_'+k+'"></span></td>'+
-'<td><a href="javascript:delinvoicerow()" title="Delete"><i class="fa fa-fw fa-close"></i></a></td>'+
                   
                 '</tr>';
 
@@ -710,6 +713,11 @@ jQuery('#invoice_create tbody').append(row);
 $(document).on('keyup change','.set_dispatch',function(){
 var row= $(this).attr("data-id");
 var set_qty =Number($("#set_dispatch_"+row+"").val());
+var set_due =Number($("#set_due_"+row+"").val());
+if(set_qty>set_due){
+  $("#set_dispatch_"+row+"").val(set_due);
+  set_qty=set_due;
+}
 var Pcs= $("#set_piece_"+row+"").val();
 var style_mrp= $("#set_mrp_"+row+"").val();
 var stock_in_hand=Number($("#stock_in_hand_"+row+"").val());
@@ -745,7 +753,36 @@ alert("Product is out for stock ");
 jQuery(document).on('submit','#frm_invoice_create',function(e){
    e.preventDefault();
    if (jQuery('#frm_invoice_create').validationEngine('validate') == true) { 
+var formData = new FormData(jQuery('#frm_invoice_create')[0]);
+$.ajax({
+type     : "POST",
+cache    : false,
+contentType: false,
+processData: false,
+url      : 'php/create_order_invoice.php',
+dataType : 'json',
+data     : formData,
+success  : function(data) {
+if (data.status==true) {
+swal('success',  data.msg,  'success');
+jQuery('#order_invoice').modal('hide');
+ 
+jQuery("#frm_invoice_create")[0].reset();
+jQuery('#invoice_create tbody').empty();
+}
+if (data.status==false) {
+swal('Sorry',  data.msg,  'error');
+}
 
+},
+beforeSend: function(){
+jQuery(".page-loader").show();
+},
+complete: function(){
+setTimeout(function() {   jQuery(".page-loader").hide();  }, 2000);
+
+}
+});
 
 }
 });
