@@ -552,7 +552,7 @@ if ($page_name == 'manage_order.php') {
         if(full[2]=='Inactive'){
          var atbu='inactive';
        }
-       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a> <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a> <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-fw fa-eye '+atbu+'"></i></a> <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
+       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a> <a href="javascript:order_invoices('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Invoice"><i class="fa fa-money '+atbu+'"></i></a>  <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a> <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-fw fa-eye '+atbu+'"></i></a> <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
      }
    },
    {
@@ -653,6 +653,23 @@ function status_update(aa, bb, cc) {
   location.href = cc + "?cid=" + aa + "&action=status&current_status=" + bb;
 }
 
+
+function order_invoices(aa, bb, cc){
+  jQuery('#order_invoices .modal-body').empty();
+   $("#order_invoices").modal();
+
+
+          var row=       '<div class="container col-md-12"> <div class="row">'+
+                   ' <div class="col-md-3"> 1st col 3 </div>'+
+
+                     '<div class="col-md-3"> 2nd col 3 </div>'+
+
+                     '<div class="col-md-3">   3rd col 3</div>'+
+                    ' </div>  </div>';
+
+       jQuery('#order_invoices .modal-body').html(row);              
+   
+   }
 
 function invoice_order(aa, bb, cc){
   jQuery('#invoice_create tbody').empty();
