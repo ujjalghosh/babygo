@@ -53,6 +53,11 @@ $_SESSION['order_msg'] = ""; ?>
 		</div>
 	</section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+<div id="divToPrint" style="display: none;">
+
+
+</div>
+
 <?php include "includes/footer.php";?>
 
 
@@ -143,4 +148,3 @@ $_SESSION['order_msg'] = ""; ?>
       </form>
     </div>
   </div>
-

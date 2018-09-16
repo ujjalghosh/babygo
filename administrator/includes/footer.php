@@ -764,11 +764,43 @@ dataType : 'json',
 data     : formData,
 success  : function(data) {
 if (data.status==true) {
-swal('success',  data.msg,  'success');
+//swal('success',  data.msg,  'success');
 jQuery('#order_invoice').modal('hide');
+var order_no=jQuery("#frm_invoice_create #order_no").val();
  
 jQuery("#frm_invoice_create")[0].reset();
 jQuery('#invoice_create tbody').empty();
+
+    swal({
+  title: data.msg,
+  text: "Do yo want to pint the invoice. ?",
+  type: "success",
+  showCancelButton: true,
+  confirmButtonClass: "btn-success",
+  confirmButtonText: "Yes",
+  cancelButtonText: "No",
+  closeOnConfirm: true,
+  closeOnCancel: true
+},
+function(isConfirm) {
+  if (isConfirm) { 
+   jQuery.ajax({
+  type: "POST",
+  url: "php/invoice_print.php",
+  data: {order_no: order_no},
+  dataType: 'html',
+  }).done(function(html) {
+  
+       w = window.open('', '_blank', 'width=600,height=500');
+            w.document.open();
+            w.document.write(html);
+            w.document.close();
+            w.window.print();
+
+  }); 
+  }  
+});
+
 }
 if (data.status==false) {
 swal('Sorry',  data.msg,  'error');
