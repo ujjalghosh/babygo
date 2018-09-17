@@ -155,16 +155,15 @@ $goods_movement_array = array('product_id' => rep($product_id), 'date_of_transac
 
 	// purchase Delete Function //
 	public function purchase_delete($purchase_page_url) {
-		$bill_id = $_REQUEST['cid'];
-		$purchase_delete = $this->db->delete(''.$_SESSION['userid'].'_purchase_bill_master', array("bill_id" => $bill_id));
-		$purchase_delete = $this->db->delete(''.$_SESSION['userid'].'_purchase_bill_transaction', array("bill_id" => $bill_id));
+	$bill_id = $_REQUEST['cid'];
+	$purchase_delete = $this->db->delete('purchase_bill_master', array("bill_id" => $bill_id));
+	$purchase_delete = $this->db->delete('purchase_bill_transaction', array("bill_id" => $bill_id));
  
- $goods_movement_register = $this->db->delete(''.$_SESSION['userid'].'_goods_movement_register', array("reference_id" => $bill_id,'reference_type' => 'purchase'));
-  $this->db->delete(''.$_SESSION['userid'].'_ledger_entry_table', array("ref_id" => $bill_id));
+ 	$goods_movement_register = $this->db->delete('goods_movement_register', array("reference_id" => $bill_id,'reference_type' => 'purchase'));
  
-		 $this->goods_movement_summary();
+		goods_movement_summary();
 		if ($purchase_delete['affectedRow'] > 0) {
-			$_SESSION['purchase_msg'] = messagedisplay('purchase details deleted successfully', 1);
+			$_SESSION['purchase_msg'] = messagedisplay('Product stock details deleted successfully', 1);
 		} else {
 			$_SESSION['purchase_msg'] = messagedisplay('Nothing is deleted successfully', 2);
 		}
@@ -173,45 +172,7 @@ $goods_movement_array = array('product_id' => rep($product_id), 'date_of_transac
 	}
 
 
-//****************************************************** 
- 
 
-public function goods_movement_summary(){
- $select_check_sql = $this->db->truncate("TRUNCATE table " . $this->db->tbl_pre . $_SESSION['userid']."_goods_movement_summary");
-$select_check_sql = $this->db->truncate("TRUNCATE table " . $this->db->tbl_pre . $_SESSION['userid']."_goods_movement_summary");
-
-if ($company_array[0]['enable_batch']==1) {
- 
-
-$select_check_sql = $this->db->query("SELECT A.`batch_id`,max(B.`batch_expiry`) as batch_expiry,A.`product_id`,A.`company_id`,A.`location_id`,sum(qty_in)-sum(qty_out) as stock_qty, 
-IFNULL(avg(case when `reference_type`='purchase' then B.taxable_value/qty_in else NULL end),0) as avg_cost_price 
-FROM ".$this->db->tbl_pre . $_SESSION['userid']."_goods_movement_register AS A 
-LEFT OUTER JOIN `".$this->db->tbl_pre . $_SESSION['userid']."_purchase_bill_transaction` as B ON A.`reference_id` = B.`bill_id` AND A.`product_id`=B.`product_id` AND A.batch_id=B.batch_code
-JOIN ".$this->db->tbl_pre . $_SESSION['userid']."_product_master C ON A.product_id = C.product_id
-JOIN ".$this->db->tbl_pre . $_SESSION['userid']."_product_group_master D ON C.product_group_id = D.product_group_id and D.type <> 'Service'
-group BY A.`batch_id`,A.`product_id`,A.`company_id`,A.`location_id`");
-}
-else
-{
-
-
-$select_check_sql = $this->db->query("SELECT 0 as batch_id ,0 as batch_expiry,A.`product_id`,A.`company_id`,A.`location_id`,sum(qty_in)-sum(qty_out) as stock_qty, IFNULL(avg(case when `reference_type`='purchase' then B.taxable_value/qty_in else NULL end),0) as avg_cost_price FROM (select reference_id, product_id, company_id, location_id, reference_type, sum(qty_in) as qty_in, sum(qty_out) as qty_out FROM ".$this->db->tbl_pre . $_SESSION['userid']."_goods_movement_register group by reference_id, product_id, company_id, location_id,reference_type) AS A LEFT OUTER JOIN ( select bill_id, product_id, sum(taxable_value) as taxable_value FROM `".$this->db->tbl_pre . $_SESSION['userid']."_purchase_bill_transaction` group by bill_id, product_id ) as B ON A.`reference_id` = B.`bill_id` AND A.`product_id`=B.`product_id` JOIN ".$this->db->tbl_pre . $_SESSION['userid']."_product_master C ON A.product_id = C.product_id JOIN ".$this->db->tbl_pre . $_SESSION['userid']."_product_group_master D ON C.product_group_id = D.product_group_id and D.type <> 'Service' group BY A.`product_id`,A.`company_id`,A.`location_id`");
-}
-
-
-$select_array = $this->db->result($select_check_sql);
- foreach ($select_array as $value) { 
- 	if (empty($value->avg_cost_price)) {
- 		$avg_price='0';
- 	}
- 	else{
- 		$avg_price=$value->avg_cost_price;
- 	}
-$movement_summary_array=array( 'batch_id' => $value->batch_id,'batch_expiry'=> "".$value->batch_expiry."",  'product_id' => $value->product_id,'company_id' => $value->company_id,'location_id' => $value->location_id,'stock_qty' => $value->stock_qty,'avg_cost_price' => "".$avg_price."" ); 
- $this->db->insert(''.$_SESSION['userid'].'_goods_movement_summary', $movement_summary_array);
- }
-return true;
-}
 
 }
 ?>
