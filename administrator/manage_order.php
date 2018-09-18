@@ -159,7 +159,11 @@ $_SESSION['order_msg'] = ""; ?>
           <h4 class="modal-title">Modal Header</h4>
         </div>
         <div class="modal-body">
+<div class="container col-md-12"> 
+	<div id="invoices_row" class="row">
 
+	</div>
+</div>
 
              </div>
           <div class="modal-footer">

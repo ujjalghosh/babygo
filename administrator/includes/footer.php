@@ -655,21 +655,41 @@ function status_update(aa, bb, cc) {
 
 
 function order_invoices(aa, bb, cc){
-  jQuery('#order_invoices .modal-body').empty();
+  jQuery('#order_invoices #invoices_row').empty();
    $("#order_invoices").modal();
 
-
-          var row=       '<div class="container col-md-12"> <div class="row">'+
-                   ' <div class="col-md-3"> 1st col 3 </div>'+
-
-                     '<div class="col-md-3"> 2nd col 3 </div>'+
-
-                     '<div class="col-md-3">   3rd col 3</div>'+
-                    ' </div>  </div>';
-
-       jQuery('#order_invoices .modal-body').html(row);              
-   
+   jQuery.ajax({
+  type: "POST",
+  url: "php/order_invoices.php",
+  data: {order_no: bb},
+  dataType: 'html',
+  }).done(function(row) {
+ jQuery('#order_invoices #invoices_row').html(row); 
+  });
+          
    }
+
+$(document).on('click','.print_inv',function(){
+var inv= $(this).attr("data-inv");
+var ord= $(this).attr("data-ord");
+
+   jQuery.ajax({
+  type: "POST",
+  url: "php/invoice_print.php",
+  data: {order_no: ord, invoice_no: inv},
+  dataType: 'html',
+  }).done(function(html) {
+  
+       w = window.open('', '_blank', 'width=600,height=500');
+            w.document.open();
+            w.document.write(html);
+            w.document.close();
+           
+
+  }); 
+
+});
+
 
 function invoice_order(aa, bb, cc){
   jQuery('#invoice_create tbody').empty();
@@ -690,7 +710,7 @@ for (i=0; i < value.order_row.length; i++){
 if(value.order_row[i].set_due>0){
 var row=''; k++; var cls= k%2==0? 'warning' : 'danger';
 row =' <tr class="'+cls+'" role="row">' +
-'<input type="hidden" id="set_piece_'+k+'" value="'+value.order_row[i].piece+'" data-id="'+k+'">  <input type="hidden" id="set_mrp_'+k+'" value="'+value.order_row[i].mrp+'" data-id="'+k+'">   <input type="hidden" id="discount_percent_'+k+'" value="'+value.order_row[i].discount_percent+'" data-id="'+k+'">  <input type="hidden" id="stock_in_hand_'+k+'" value="'+value.order_row[i].stock_in_hand+'" data-id="'+k+'"> <input type="hidden" id="set_due_'+k+'" value="'+value.order_row[i].set_due+'" data-id="'+k+'"> <input type="hidden" name="product_id_'+k+'" value="'+value.order_row[i].product_id+'" > <input type="hidden" name="product_details_id_'+k+'" value="'+value.order_row[i].product_details_id+'" <input type="hidden" name="hsn_'+k+'" value="'+value.order_row[i].hsn+'">'+
+'<input type="hidden" id="set_piece_'+k+'" value="'+value.order_row[i].piece+'" data-id="'+k+'">  <input type="hidden" id="set_mrp_'+k+'" value="'+value.order_row[i].mrp+'" data-id="'+k+'">   <input type="hidden" id="discount_percent_'+k+'" name="discount_percent_'+k+'" value="'+value.order_row[i].discount_percent+'" data-id="'+k+'">  <input type="hidden" id="stock_in_hand_'+k+'" value="'+value.order_row[i].stock_in_hand+'" data-id="'+k+'"> <input type="hidden" id="set_due_'+k+'" value="'+value.order_row[i].set_due+'" data-id="'+k+'"> <input type="hidden" name="product_id_'+k+'" value="'+value.order_row[i].product_id+'" > <input type="hidden" name="product_details_id_'+k+'" value="'+value.order_row[i].product_details_id+'" <input type="hidden" name="hsn_'+k+'" value="'+value.order_row[i].hsn+'">'+
 
 '<td><input type="hidden" name="sl_'+k+'" value="'+k+'" ><span>'+k+'</span></td>'+
 '<td><input type="hidden" name="product_name_'+k+'" value="'+value.order_row[i].product_name+'" ><span>'+value.order_row[i].product_name+'</span></td>'+
@@ -784,6 +804,7 @@ if (data.status==true) {
 //swal('success',  data.msg,  'success');
 jQuery('#order_invoice').modal('hide');
 var order_no=jQuery("#frm_invoice_create #order_no").val();
+var invoice_no = data.invoice_no;
  
 jQuery("#frm_invoice_create")[0].reset();
 jQuery('#invoice_create tbody').empty();
@@ -804,7 +825,7 @@ function(isConfirm) {
    jQuery.ajax({
   type: "POST",
   url: "php/invoice_print.php",
-  data: {order_no: order_no},
+  data: {order_no: order_no, invoice_no: invoice_no},
   dataType: 'html',
   }).done(function(html) {
   

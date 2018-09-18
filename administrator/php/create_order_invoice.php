@@ -55,6 +55,7 @@ $goods_movement_add=$db->insert('goods_movement_register', $goods_movement_array
 }
   goods_movement_summary();
 		$response['status']=true;
+		$response['invoice_no']=$invoice_no;
 		$response['msg']='Invoice is created successfully..';
 
 	}else{

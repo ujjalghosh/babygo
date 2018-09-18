@@ -2,6 +2,15 @@
 include "../../includes/settings.php";
 include "../../includes/class_call_one_file.php"; 
 $order_no = $_REQUEST['order_no']; 
+$invoice_no = $_REQUEST['invoice_no'];
+
+$order_sql = $db->query("SELECT ct.customer_name,ct.customer_phone_number,ct.gst_no, om.billing_address, om.`billing_city` ,(SELECT Subdivision_name FROM babygodb_state_list_tbl st WHERE st.Code=om.`billing_state`) AS billing_state ,om.`billing_pin`, om.`shipping_address`, om.`shipping_city`,(SELECT Subdivision_name FROM babygodb_state_list_tbl st WHERE st.Code=om.`shipping_state`) AS shipping_state,om.`shipping_pin` FROM `babygodb_order_master` om LEFT JOIN babygodb_customer_tbl ct ON ct.customer_id=om.customer_id WHERE om.generate_no='".$order_no."' ", PDO::FETCH_BOTH);
+$check_num= $db->total($order_sql); 
+if($check_num==1){
+$master_row = $db->result($order_sql); 
+
+$invoice_sql = $db->query("SELECT im.`invoice_no`, DATE_FORMAT(im.`invoice_date`,'%d-%m-%Y') AS invoice_date,it.hsn,it.description,it.style_no,it.size,it.colour,it.set_dispatch,it.pcs,it.mrp,it.discount_percent,it.amount_discount,it.net_amount,it.grand_amount FROM `babygodb_invoice_master` im LEFT JOIN babygodb_invoice_trns it ON it.invoice_no=im.invoice_no WHERE im.`order_no`='".$order_no."' AND im.`invoice_no`='".$invoice_no."'  ", PDO::FETCH_BOTH);
+$invoice_row = $db->result($invoice_sql); 
  ?>
 <html lang="en">
 <head>
@@ -112,10 +121,11 @@ $order_no = $_REQUEST['order_no'];
       </tr>
       <tr>
         <td rowspan="2" valign="top" width="48%">
-          <strong>Name :  </strong> Lorem ipsum dolor sit<br>
-          <strong>Address :  </strong> Lorem ipsum dolor sit<br>
-          <strong>State :  </strong> PUNJAB <br>
-          <strong>Mob  :  </strong> 9914027165 <br>
+          <strong>Name :  </strong> <?php echo $master_row[0]['customer_name']; ?><br>
+          <strong>Address :  </strong> <?php echo $master_row[0]['billing_address']; ?><br>
+          <strong>City :  </strong> <?php echo $master_row[0]['billing_city']; ?> <br>
+          <strong>State :  </strong> <?php echo $master_row[0]['billing_state']; ?> &nbsp; &nbsp; <?php echo $master_row[0]['billing_pin']; ?> <br>
+          <strong>Mob  :  </strong> <?php echo $master_row[0]['customer_phone_number']; ?> <br>
 
         </td>
         <td height="40" valign="top">Invoice No: 123-126-4563 </td>
@@ -123,9 +133,9 @@ $order_no = $_REQUEST['order_no'];
       </tr>
       <tr>
         <td rowspan="1" colspan="3" valign="top" ">
-          <strong>Shipping Add : :  </strong> Lorem ipsum dolor sit<br>
-          <strong>Address :  </strong> Lorem ipsum dolor sit<br>
-          <strong>State :  </strong> PUNJAB <br>   <br><br>    
+          <strong>Shipping Add : </strong> <?php echo $master_row[0]['shipping_address']; ?><br>
+          <strong>City :  </strong> <?php echo $master_row[0]['shipping_city']; ?><br>
+          <strong>State :  </strong> <?php echo $master_row[0]['shipping_state']; ?> <br> <?php echo $master_row[0]['shipping_pin']; ?>  <br> <br>    
 
         </td>        
       </tr>
@@ -152,296 +162,62 @@ $order_no = $_REQUEST['order_no'];
             </tr>
             </thead>
             <tbody>
+              <?php 
+              $total=0;$pcs=0;
+for ($i=0; $i <count($invoice_row) ; $i++) { ?>
             <tr>
-              <td align="center" valign="top">1</td>
+              <td align="center" valign="top"><?php echo $i+1; ?></td>
               <td align="left">
-              <strong style="font-size:13px;text-transform:uppercase">Lorem ipsum dolor sit</strong>
+              <strong style="font-size:13px;text-transform:uppercase"><?php echo $invoice_row[$i]['description'] ?></strong>
               </td>
-              <td align="center">12345678</td>
-              <td align="right">18%</td>
-              <td align="right"><strong>2 Pcs</strong></td>
-              <td align="right">2,500.00</td>
-              <td align="center">Pcs</td>
-              <td align="right">18%</td>
-              <td align="right"><strong>2 Pcs</strong></td>
-              <td align="right">2,500.00</td>
-              <td align="right">2,500.00</td>
-              <td align="center">Pcs</td>
-              <td align="right" style="border-right:0">5000.00</td>
+              <td align="left"><?php echo $invoice_row[$i]['size'] ?></td>
+              <td align="right">1/2</td>
+              <td align="right"><?php echo $invoice_row[$i]['hsn'] ?></td>
+              <td align="right"><?php echo $invoice_row[$i]['pcs']/$invoice_row[$i]['set_dispatch'] ?></td>
+              <td align="center"><?php echo $invoice_row[$i]['pcs'] ?></td>
+              <td align="center">Pc</td>
+              <td align="right"><?php echo $invoice_row[$i]['mrp'] ?></td>
+              <td align="right"><?php echo $invoice_row[$i]['discount_percent'] ?></td>
+              <td align="right"><?php echo $invoice_row[$i]['amount_discount'] ?></td>
+              <td align="center"><?php echo $invoice_row[$i]['net_amount'] ?></td>
+              <td align="right" style="border-right:0"><?php echo $invoice_row[$i]['grand_amount'] ?></td>
             </tr>
+<?php
+$pcs=$pcs+$invoice_row[$i]['pcs'];
+$total=$total+$invoice_row[$i]['grand_amount'];
+ } ?>
+
+<?php 
+$k=$i;
+if ($i<22) {
+  for ($i=$k; $i <32 ; $i++) { ?>
+    
             <tr>
-              <td align="center" valign="top">2</td>
+              <td align="center" valign="top">&nbsp;</td>
               <td align="left">
-              <strong style="font-size:13px;text-transform:uppercase">Lorem ipsum dolor sit</strong>
+              <strong style="font-size:13px;text-transform:uppercase">&nbsp;</strong>
               </td>
-              <td align="center">12345678</td>
-              <td align="right">18%</td>
-              <td align="right"><strong>2 Pcs</strong></td>
-              <td align="right">2,500.00</td>
-              <td align="center">Pcs</td>
-              <td align="right">18%</td>
-              <td align="right"><strong>2 Pcs</strong></td>
-              <td align="right">2,500.00</td>
-              <td align="right">2,500.00</td>
-              <td align="center">Pcs</td>
-              <td align="right" style="border-right:0">5000.00</td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td align="right" style="border-top:1px solid #999;border-right:0;padding-bottom:8px">8,700.00</td>
+              <td align="left">&nbsp;</td>
+              <td align="right">&nbsp;</td>
+              <td align="right">&nbsp;</td>
+              <td align="right">&nbsp;</td>
+              <td align="center">&nbsp;</td>
+              <td align="center">&nbsp;</td>
+              <td align="right">&nbsp;</td>
+              <td align="right">&nbsp;</td>
+              <td align="right">&nbsp;</td>
+              <td align="center">&nbsp;</td>
+              <td align="right" style="border-right:0">&nbsp;</td>
             </tr>
 
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td align="right" style="border-top:1px solid #999;border-right:0;padding-bottom:8px">8,700.00</td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td align="right" style="border-top:1px solid #999;border-right:0;padding-bottom:8px">8,700.00</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
-            <tr>
-              <td style="border-left:0">&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-               <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td style="border-right:0">&nbsp;</td>
-            </tr>
+  <?php }
+}
+
+ ?>
+
+
+
+
             </tbody>
             <tfoot>
             <tr>
@@ -449,19 +225,19 @@ $order_no = $_REQUEST['order_no'];
               <td style="border:1px solid #999" align="right">Total</td>
               <td style="border:1px solid #999">&nbsp;</td>
               <td style="border:1px solid #999">&nbsp;</td>
-              <td style="border:1px solid #999" align="right"><strong>4 Pcs</strong></td>
+              <td style="border:1px solid #999" align="right">&nbsp;</td>
+              <td style="border:1px solid #999">&nbsp;</td>
+              <td style="border:1px solid #999"><strong><?php echo $pcs; ?></strong></td>
               <td style="border:1px solid #999">&nbsp;</td>
               <td style="border:1px solid #999">&nbsp;</td>
               <td style="border:1px solid #999">&nbsp;</td>
               <td style="border:1px solid #999">&nbsp;</td>
               <td style="border:1px solid #999">&nbsp;</td>
-              <td style="border:1px solid #999">&nbsp;</td>
-              <td style="border:1px solid #999">&nbsp;</td>
-              <td style="border:1px solid #999;border-right:0" align="right"><strong>? 10,000.00</strong></td>
+              <td style="border:1px solid #999;border-right:0" align="right"><strong> <?php echo amount_format_in($total); ?></strong></td>
             </tr>
             <tr>
-              <td colspan="7">Amount Chargeable (in words)<br><strong style="font-size:14px;">Lorem ipsum dolor sit</strong></td>
-              <td align="right"  style="border:0;font-style:italic">E. & O.E</td>
+              <td colspan="7">Amount in words<br><strong style="font-size:14px;"><?php echo ucwords(convert_number_to_words($total)); ?></strong></td>
+              <td align="right"  style="border:0;font-style:italic"></td>
             </tr>
             </tfoot>
           </table>
@@ -509,43 +285,35 @@ $order_no = $_REQUEST['order_no'];
           </table>
         </td>
       </tr>
-      <tr>
-        <td colspan="3" height="40" style="border-bottom:0">Tax Amount (in words) &nbsp;&nbsp;<strong style="font-size:14px;">Lorem ipsum dolor sit</strong></td>
-      </tr>
+
       <tr>
         <td colspan="3" style="padding:0;border-top:0">
-          <table class="no-border" width="100%" cellpadding="0" cellspacing="0">
+          <table  width="100%" cellpadding="0" cellspacing="0">
             <tr>
-              <td width="50%" rowspan="4" align="left" style="vertical-align:bottom;padding-bottom:10px">
+              <td width="35%" rowspan="4" align="left" style="vertical-align:bottom;padding-bottom:10px">
                 <span style="width:120px;display:inline-block">Buyer's VAT TIN</span>: <strong>1023456789</strong><br>
                 Deciaration<br>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
               </td>
-              <td style="vertical-align:bottom">
+              <td width="35%">
               Company's Bank Details<br>
               <span style="width:108px;display:inline-block">Bank Name</span>:&nbsp;<strong>H.D.F.C BANK LTD</strong><br>
               <span style="width:108px;display:inline-block">A/C No.</span>:&nbsp;<strong>10234567891</strong><br>
               <span style="width:108px;display:inline-block">Branch & IFS Code</span>:&nbsp;<strong>G.C Avenue & HDFC0000382</strong>
               </td>
+              <td width="30%"></td>
             </tr>
-            <tr>
-              <td align="right" style="border-left:1px solid #999;border-top:1px solid #999">for M.S.IT STORE - (From 1-Apr-2015)</td>
-            </tr>
-            <tr>
-              <td align="right" height="30" style="border-left:1px solid #999;">&nbsp;</td>
-            </tr>
-            <tr>
-              <td align="right" style="border-left:1px solid #999;">Authorised Signatory</td>
-            </tr>
+
+
+    
           </table>
         </td>
       </tr>
     </table>
   </div>
-  <div class="section">
-    <p style="text-align:center;margin-top:0;line-height:24px;">SUBJECT TO KOLKATA JURISDICTION<br>This is a Computer Generated Invoice</p>
-  </div>
+
   </page>
 
 </body>
 </html>
+<?php } ?>
