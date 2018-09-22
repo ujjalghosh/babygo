@@ -45,18 +45,14 @@ $(document).ready(function(){
 	// Images Slider
 
 	$('.home-slider').owlCarousel({
-
 	    items:1,
-
 	    dots:true,
-
+	    loop: true,
 	    autoplay: true,
-
 	    autoplayHoverPause: true,
-
-	    animateOut: 'slideOutUp',
-
-  		animateIn: 'slideInUp'
+	    animateOut: 'slideOutDown',
+    	animateIn: 'flipInX',
+    	smartSpeed:450
 
 	});
 

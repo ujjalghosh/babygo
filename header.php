@@ -26,6 +26,8 @@ $notification_array = $notification->notification_display($db->tbl_pre . "notifi
   <!-- Owl Stylesheets -->
   <link rel="stylesheet" href="css/owl.carousel.min.css">
   <link rel="stylesheet" href="css/owl.theme.default.min.css">
+ <!-- Animate css -->
+ <link rel="stylesheet" type="text/css" href="css/animate.css">
   <!-- Slick Stylesheets -->
   <link rel="stylesheet" href="css/slick.css">
   <link rel="stylesheet" href="css/slick-theme.css">
