@@ -691,6 +691,56 @@ var ord= $(this).attr("data-ord");
 });
 
 
+$(document).on('click','.delete_inv',function(){
+var invoice_id= $(this).attr("data-invoice_id");
+
+    swal({
+  title: '',
+  text: "Are you sure you want to delete this invoice. ?",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonClass: "btn-success",
+  confirmButtonText: "Confirm",
+  cancelButtonText: "Cancle",
+  closeOnConfirm: true,
+  closeOnCancel: true
+},
+function(isConfirm) {
+  if (isConfirm) { 
+  $.ajax({
+type     : "POST",
+dataType : 'json',
+url: "php/invoice_delete.php",
+data: {invoice_id: invoice_id},
+success  : function(data) {
+if (data.status==true) {
+  $("#order_invoices").modal('hide');
+swal('success',  data.msg,  'success');
+}
+if (data.status==false) {
+swal('Sorry',  data.msg,  'error');
+}
+
+},
+beforeSend: function(){
+            window.swal({
+              title: "Checking...",
+              text: "Please wait",
+              imageUrl: "assets/images/images/ajaxloader.gif",
+              showConfirmButton: false,
+              allowOutsideClick: false
+            });
+},
+complete: function(){
+
+}
+});
+  }  
+});
+
+});
+
+
 function invoice_order(aa, bb, cc){
   jQuery('#invoice_create tbody').empty();
    $("#order_invoice").modal();
