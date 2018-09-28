@@ -552,7 +552,7 @@ if ($page_name == 'manage_order.php') {
         if(full[2]=='Inactive'){
          var atbu='inactive';
        }
-       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a> <a href="javascript:order_invoices('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Invoice"><i class="fa fa-money '+atbu+'"></i></a>  <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a> <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-fw fa-eye '+atbu+'"></i></a> <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
+       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a> <a href="javascript:order_invoices('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Invoice"><i class="fa fa-money '+atbu+'"></i></a>  <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a> <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-fw fa-eye '+atbu+'"></i></a> <a href="javascript:close_order('+full[0]+',\''+full[2]+'\',\'manage_product_category.php\')" title="Close order"><i class="fa fa-fw fa-lightbulb-o '+atbu+'"></i></a> <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
      }
    },
    {
