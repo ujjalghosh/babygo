@@ -99,7 +99,7 @@ $invoice_row = $db->result($invoice_sql);
 <table class="no-border" width="100%" cellpadding="0" cellspacing="0">
   <tr> 
 <td width="30%">
-  <img src="<?php echo Site_URL; ?>images/logo_order.png" alt="">
+  <img src="<?php echo Site_URL; ?>images/logo_order.png" alt="" width="150">
 </td>
 <td width="70%">
  <h2> GREEN ORBIT APPARELS PVT. LTD.</h2>
