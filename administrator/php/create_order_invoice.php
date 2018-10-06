@@ -19,6 +19,12 @@ if ($invoice_add['affectedRow'] > 0) {
  $invoice_array = $db->result($invoice_query);
  $invoice_no= $invoice_array[0]['invoice_no']; 
 
+ 
+$order_sql = $db->query("SELECT shipping_state   FROM `babygodb_order_master`   WHERE  generate_no='".$order_no."' ", PDO::FETCH_BOTH);
+$master_row = $db->result($order_sql); 
+$gst_shipping_state = $master_row[0]['shipping_state'];
+
+
 if (isset($_POST['total_row'])) {
   for ($pr = 1; $pr <= $_REQUEST['total_row']; $pr++) {
 	if(isset($_REQUEST['product_id_'. $pr]) && !empty($_REQUEST['product_id_'. $pr]) && !empty($_REQUEST['set_dispatch_'. $pr])){
@@ -39,7 +45,21 @@ if (isset($_POST['total_row'])) {
 	$grand_amount = $_REQUEST['grand_amount_'. $pr];
 	$discount_percent = $_REQUEST['discount_percent_'. $pr];
 
-	$value =array("invoice_id"=>$invoice_id,"invoice_no"=>$invoice_no,"product_id"=>"".rep($product_id)."", "product_details_id"=>"".rep($product_details_id)."","hsn"=>"".rep($hsn)."","description"=>"".rep($description)."","style_no"=>"".rep($style_no)."","size"=>"".rep($size)."","colour"=>"".rep($colour)."","set_ordered"=>"".rep($set_order)."","set_dispatch"=>"".rep($set_dispatch)."","pcs"=>"".rep($pcs)."","mrp"=>"".rep($mrp)."","amount_discount"=>"".rep($amount_discount)."","net_amount"=>"".rep($net_amount)."","grand_amount"=>"".rep($grand_amount)."","discount_percent"=>"".rep($discount_percent)."");
+	$cgst_rate = $igst_rate =$sgst_rate = $cgst_amt = $igst_amt = $sgst_amt = $amount_incl_tax = 0;
+
+	  $rate= $mrp>=1000 ? 12 : 5;
+	    $gst_shipping_state;
+	if ($gst_shipping_state=='IN-WB') {
+	   $cgst_rate = $sgst_rate= $rate/2;
+	 $cgst_amt = $sgst_amt = $grand_amount*$cgst_rate/100;
+		
+	}else {
+	  $igst_rate = $rate;
+	 $igst_amt   = $grand_amount*$rate/100;
+	}
+	 
+$amount_incl_tax = round($grand_amount + $cgst_amt + $sgst_amt+ $igst_amt);
+	$value =array("invoice_id"=>$invoice_id,"invoice_no"=>$invoice_no,"product_id"=>"".rep($product_id)."", "product_details_id"=>"".rep($product_details_id)."","hsn"=>"".rep($hsn)."","description"=>"".rep($description)."","style_no"=>"".rep($style_no)."","size"=>"".rep($size)."","colour"=>"".rep($colour)."","set_ordered"=>"".rep($set_order)."","set_dispatch"=>"".rep($set_dispatch)."","pcs"=>"".rep($pcs)."","mrp"=>"".rep($mrp)."","amount_discount"=>"".rep($amount_discount)."","net_amount"=>"".rep($net_amount)."","grand_amount"=>"".rep($grand_amount)."","discount_percent"=>"".rep($discount_percent)."","gst_rate"=>"".rep($rate)."","cgst_rate"=>"".rep($cgst_rate)."","igst_rate"=>"".rep($igst_rate)."","sgst_rate"=>"".rep($sgst_rate)."","cgst_amt"=>"".rep($cgst_amt)."","igst_amt"=>"".rep($igst_amt)."","sgst_amt"=>"".rep($sgst_amt)."","amount_incl_tax"=>"".rep($amount_incl_tax)."");
 	
 	$db->insert('invoice_trns', $value);
  

@@ -9,8 +9,12 @@ $check_num= $db->total($order_sql);
 if($check_num==1){
 $master_row = $db->result($order_sql); 
 
-$invoice_sql = $db->query("SELECT im.`invoice_no`, DATE_FORMAT(im.`invoice_date`,'%d-%m-%Y') AS invoice_date,it.hsn,it.description,it.style_no,it.size,it.colour,it.set_dispatch,it.pcs,it.mrp,it.discount_percent,it.amount_discount,it.net_amount,it.grand_amount FROM `babygodb_invoice_master` im LEFT JOIN babygodb_invoice_trns it ON it.invoice_no=im.invoice_no WHERE im.`order_no`='".$order_no."' AND im.`invoice_no`='".$invoice_no."'  ", PDO::FETCH_BOTH);
+$invoice_sql = $db->query("SELECT im.`invoice_no`, DATE_FORMAT(im.`invoice_date`,'%d-%m-%Y') AS invoice_date,it.hsn,it.description,it.style_no,it.size,it.colour,it.set_dispatch,it.pcs,it.mrp,it.discount_percent,it.amount_discount,it.net_amount,it.grand_amount,it.amount_incl_tax FROM `babygodb_invoice_master` im LEFT JOIN babygodb_invoice_trns it ON it.invoice_no=im.invoice_no WHERE im.`order_no`='".$order_no."' AND im.`invoice_no`='".$invoice_no."'  ", PDO::FETCH_BOTH);
 $invoice_row = $db->result($invoice_sql); 
+
+$tax_sql = $db->query("SELECT it.`gst_rate`,SUM(it.`grand_amount`) AS txable,SUM(it.`cgst_amt`) AS cgst_amt,SUM(it.`igst_amt`) AS igst_amt,SUM(it.`sgst_amt`) AS sgst_amt  FROM `babygodb_invoice_master` im LEFT JOIN babygodb_invoice_trns it ON it.invoice_no=im.invoice_no WHERE im.`order_no`='".$order_no."' AND im.`invoice_no`='".$invoice_no."' GROUP BY gst_rate ORDER BY gst_rate ASC  ", PDO::FETCH_BOTH);
+$tax_row = $db->result($tax_sql); 
+
  ?>
 <html lang="en">
 <head>
@@ -88,7 +92,7 @@ $invoice_row = $db->result($invoice_sql);
     h4{font-size: 10pt;margin-bottom: 5px;}
   
    .center_text{text-align: center;}
-
+table.center_text tr td{text-align: center;}
   </style>
 
 <body>
@@ -96,18 +100,20 @@ $invoice_row = $db->result($invoice_sql);
   <page size="A4">
   <div class="section">
 
-<table class="no-border" width="100%" cellpadding="0" cellspacing="0">
+<table class="no-border center_text" width="100%" cellpadding="0" cellspacing="0">
   <tr> 
-<td width="30%">
+<td width="15%">
   <img src="<?php echo Site_URL; ?>images/logo_order.png" alt="" width="150">
 </td>
-<td width="70%">
+<td width="60%">
  <h2> GREEN ORBIT APPARELS PVT. LTD.</h2>
 <p>21, BALLYGUANGE CIRCULAR ROAD, CPC OFFICE COMPLEX, 1st FLOOR <br>
 <span class="center_text">UNIT-3, KOLKATA - 700019</span></p>
-<p><span class="center_text">Tel : 033 4602 6390</span></p>
+<p><span class="center_text">Tel : 033 4602 6390</span><br>
+<span class="center_text">GSTIN - <?php echo Gstin; ?></span></p>
 
 </td>
+<td width="15%">&nbsp;</td>
   </tr>
 </table>
 
@@ -126,7 +132,7 @@ $invoice_row = $db->result($invoice_sql);
           <strong>City :  </strong> <?php echo $master_row[0]['billing_city']; ?> <br>
           <strong>State :  </strong> <?php echo $master_row[0]['billing_state']; ?> &nbsp; &nbsp; <?php echo $master_row[0]['billing_pin']; ?> <br>
           <strong>Mob  :  </strong> <?php echo $master_row[0]['customer_phone_number']; ?> <br>
-
+            <strong>GSTIN  :  </strong> <?php echo $master_row[0]['gst_no']; ?> <br>
         </td>
         <td height="40" valign="top">Invoice No: 123-126-4563 </td>
         <td height="40" valign="top">Invoice Date : 30-08-2018</td> 
@@ -135,7 +141,8 @@ $invoice_row = $db->result($invoice_sql);
         <td rowspan="1" colspan="3" valign="top" ">
           <strong>Shipping Add : </strong> <?php echo $master_row[0]['shipping_address']; ?><br>
           <strong>City :  </strong> <?php echo $master_row[0]['shipping_city']; ?><br>
-          <strong>State :  </strong> <?php echo $master_row[0]['shipping_state']; ?> <br> <?php echo $master_row[0]['shipping_pin']; ?>  <br> <br>    
+          <strong>State :  </strong> <?php echo $master_row[0]['shipping_state']; ?> <br> <?php echo $master_row[0]['shipping_pin']; ?>  <br> 
+          <strong>GSTIN  :  </strong> <?php echo $master_row[0]['gst_no']; ?><br> <br>   
 
         </td>        
       </tr>
@@ -163,7 +170,7 @@ $invoice_row = $db->result($invoice_sql);
             </thead>
             <tbody>
               <?php 
-              $total=0;$pcs=0;
+              $total= $amount_incl_tax =0;$pcs=0;
 for ($i=0; $i <count($invoice_row) ; $i++) { ?>
             <tr>
               <td align="center" valign="top"><?php echo $i+1; ?></td>
@@ -176,15 +183,16 @@ for ($i=0; $i <count($invoice_row) ; $i++) { ?>
               <td align="right"><?php echo $invoice_row[$i]['pcs']/$invoice_row[$i]['set_dispatch'] ?></td>
               <td align="center"><?php echo $invoice_row[$i]['pcs'] ?></td>
               <td align="center">Pc</td>
-              <td align="right"><?php echo $invoice_row[$i]['mrp'] ?></td>
+              <td align="right"><?php echo amount_format_in($invoice_row[$i]['mrp']) ?></td>
               <td align="right"><?php echo $invoice_row[$i]['discount_percent'] ?></td>
-              <td align="right"><?php echo $invoice_row[$i]['amount_discount'] ?></td>
-              <td align="center"><?php echo $invoice_row[$i]['net_amount'] ?></td>
-              <td align="right" style="border-right:0"><?php echo $invoice_row[$i]['grand_amount'] ?></td>
+              <td align="right"><?php echo amount_format_in($invoice_row[$i]['amount_discount']) ?></td>
+              <td align="center"><?php echo amount_format_in($invoice_row[$i]['net_amount']) ?></td>
+              <td align="right" style="border-right:0"><?php echo amount_format_in($invoice_row[$i]['grand_amount']) ?></td>
             </tr>
 <?php
 $pcs=$pcs+$invoice_row[$i]['pcs'];
 $total=$total+$invoice_row[$i]['grand_amount'];
+$amount_incl_tax= $amount_incl_tax+$invoice_row[$i]['amount_incl_tax'];
  } ?>
 
 <?php 
@@ -236,7 +244,7 @@ if ($i<22) {
               <td style="border:1px solid #999;border-right:0" align="right"><strong> <?php echo amount_format_in($total); ?></strong></td>
             </tr>
             <tr>
-              <td colspan="7">Amount in words<br><strong style="font-size:14px;"><?php echo ucwords(convert_number_to_words($total)); ?></strong></td>
+              <td colspan="7">Amount in words (Round) <br><strong style="font-size:14px;"><?php echo ucwords(convert_number_to_words($amount_incl_tax)); ?> Only</strong></td>
               <td align="right"  style="border:0;font-style:italic"></td>
             </tr>
             </tfoot>
@@ -246,42 +254,45 @@ if ($i<22) {
       <tr>
         <td colspan="3" style="padding:0;">
           <table width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-              <td width="55%" rowspan="2" align="center" style="border-top:0;border-left:0">HSN/SAC</td>
-              <td rowspan="2" align="center" style="border-top:0">Taxable<br>Value</td>
-              <td colspan="2" align="center" style="border-top:0">Central Tax</td>
-              <td colspan="2" align="center" style="border-top:0;border-right:0">State Tax</td>
-            </tr>
-            <tr>
-              <td align="center">Rate</td>
-              <td align="center">Amount</td>
-              <td align="center">Rate</td>
-              <td align="center" style="border-right:0">Amount</td>
-            </tr>
-            <tr>
-              <td align="left" style="border:0;border-right:1px solid #999">84733020</td>
-              <td align="right" style="border:0;border-right:1px solid #999">5,000.00</td>
-              <td align="right" style="border:0;border-right:1px solid #999">9%</td>
-              <td align="right" style="border:0;border-right:1px solid #999">450.00</td>
-              <td align="right" style="border:0;border-right:1px solid #999">9%</td>
-              <td align="right" style="border:0;">450.00</td>
-            </tr>
-            <tr>
-              <td align="left" style="border:0;border-right:1px solid #999">84733030</td>
-              <td align="right" style="border:0;border-right:1px solid #999">5,000.00</td>
-              <td align="right" style="border:0;border-right:1px solid #999">9%</td>
-              <td align="right" style="border:0;border-right:1px solid #999">450.00</td>
-              <td align="right" style="border:0;border-right:1px solid #999">9%</td>
-              <td align="right" style="border:0">450.00</td>
-            </tr>            
-            <tr>
-              <td align="right" style="border-bottom:0;border-left:0"><strong>Total</strong></td>
-              <td align="right" style="border-bottom:0"><strong>8,700.00</strong></td>
-              <td align="right" style="border-bottom:0">&nbsp;</td>
-              <td align="right" style="border-bottom:0"><strong>783.00</strong></td>
-              <td align="right" style="border-bottom:0">&nbsp;</td>
-              <td align="right" style="border-bottom:0;border-right:0"><strong>783.00</strong></td>
-            </tr>
+ 
+      <tr>
+        <td rowspan="2" valign="top" width="48%">
+          <strong><u>Bank Details</u><br>
+          <strong>BANK :  </strong>  <br>
+          <strong>BRANCH :  </strong>  <br>
+          <strong>ACCOUNT NO :  </strong>  <br>
+          <strong>IFSC CODE :  </strong>  <br>
+          <strong>PAN NO :  </strong>  
+        </td>
+        <td height="20" valign="top">Total Amount <span style="float: right;">Rs: <?php echo amount_format_in($amount_incl_tax); ?></span>  </td> 
+      </tr>
+      <tr>
+        <td rowspan="1" colspan="2" valign="top" ">
+          <table class="no-border" width="100%" cellpadding="0" cellspacing="0">
+            <caption style="font-size: 13px;">GST tax details</caption>
+            <thead>
+              <tr>
+                <td>GST Rate</td><td>Taxable <br> Value</td><td>CGST</td><td>SGST</td><td>IGST</td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php for ($i = 0; $i <count($tax_row) ; $i++) {?>
+              <tr>
+                <td><?php echo $tax_row[$i]['gst_rate'] ?>%</td>
+                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['txable']) ?> </td>
+                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['cgst_amt']) ?> </td>
+                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['sgst_amt']) ?> </td>
+                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['igst_amt']) ?> </td>
+              </tr>
+ <?php } ?>
+ 
+            </tbody>
+          </table>
+
+        </td>        
+      </tr>
+
+ 
           </table>
         </td>
       </tr>

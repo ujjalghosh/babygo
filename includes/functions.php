@@ -727,7 +727,7 @@ return $amount;
         $string .= implode(' ', $words);
     }
 
-    return $string. ' Only';
+    return $string ;
 }
 
 

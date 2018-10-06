@@ -21,14 +21,7 @@ if (isset($_REQUEST['submit'])) {
 	$c = $c + $sql['affectedRow'];
 	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['pagination_number'])), "site_configuration_id=9");
 	$c = $c + $sql['affectedRow'];
-	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['paypal_api_username'])), "site_configuration_id=10");
-	$c = $c + $sql['affectedRow'];
-	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['paypal_api_password'])), "site_configuration_id=11");
-	$c = $c + $sql['affectedRow'];
-	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['paypal_api_signature'])), "site_configuration_id=12");
-	$c = $c + $sql['affectedRow'];
-	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['payment_mode'])), "site_configuration_id=13");
-	$c = $c + $sql['affectedRow'];
+ 
 	if ($_FILES['site_logo']['size'] > 0) {
 		$original = 'images/';
 		$albumfile_name = $_FILES['site_logo']['name'];
@@ -49,10 +42,9 @@ if (isset($_REQUEST['submit'])) {
 	}
 	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['copyright_text'])), "site_configuration_id=15");
 	$c = $c + $sql['affectedRow'];
-	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['story2_unit_price'])), "site_configuration_id=16");
+	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['Gstin'])), "site_configuration_id=16");
 	$c = $c + $sql['affectedRow'];
-	$sql = $db->update('site_configuration_tbl', array('site_configuration_value' => rep($_POST['story3_unit_price'])), "site_configuration_id=17");
-	$c = $c + $sql['affectedRow'];
+ 
 	//echo $c;
 	if ($c > 0) {
 		$_SESSION['general_settings_msg'] = messagedisplay("Settings updated successfully.", 1);
@@ -72,14 +64,11 @@ $time_zone = $db->result($db->query("select site_configuration_value from " . $d
 $admin_receiving_email_id = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=7", PDO::FETCH_BOTH));
 $admin_sending_email_id = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=8", PDO::FETCH_BOTH));
 $pagination_number = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=9", PDO::FETCH_BOTH));
-$paypal_api_username = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=10", PDO::FETCH_BOTH));
-$paypal_api_password = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=11", PDO::FETCH_BOTH));
-$paypal_api_signature = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=12", PDO::FETCH_BOTH));
-$payment_mode = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=13", PDO::FETCH_BOTH));
+ 
 $site_logo = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=14", PDO::FETCH_BOTH));
 $copyright_text = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=15", PDO::FETCH_BOTH));
-$story2_unit_price = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=16", PDO::FETCH_BOTH));
-$story3_unit_price = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=17", PDO::FETCH_BOTH));
+$Gstin = $db->result($db->query("select site_configuration_value from " . $db->tbl_pre . "site_configuration_tbl where site_configuration_id=16", PDO::FETCH_BOTH));
+ 
 include "includes/header.php";
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -328,31 +317,8 @@ $_SESSION['general_settings_msg'] = ""; ?>
 									<input type="text" class="form-control" placeholder="Enter ..." name="pagination_number" id="pagination_number" value="<?php echo $pagination_number[0][0]; ?>" data-validation-engine="validate[required,custom[integer]]" />
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Paypal API Username</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Enter ..." name="paypal_api_username" id="paypal_api_username" value="<?php echo $paypal_api_username[0][0]; ?>" data-validation-engine="validate[required]" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Paypal API Password</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Enter ..." name="paypal_api_password" id="paypal_api_password" value="<?php echo $paypal_api_password[0][0]; ?>" data-validation-engine="validate[required]" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Paypal API Signature</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="Enter ..." name="paypal_api_signature" id="paypal_api_signature" value="<?php echo $paypal_api_signature[0][0]; ?>" data-validation-engine="validate[required]" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Payment Mode</label>
-								<div class="col-sm-10">
-									<input type="radio" class="form-control" name="payment_mode" id="payment_mode" value="Sandbox" data-validation-engine="validate[required]" <?php echo $payment_mode[0][0] == 'Sandbox' ? 'checked="checked"' : ''; ?> /> Sandbox
-									<input type="radio" class="form-control" name="payment_mode" id="payment_mode" value="Live" data-validation-engine="validate[required]" <?php echo $payment_mode[0][0] == 'Live' ? 'checked="checked"' : ''; ?> /> Live
-								</div>
-							</div>
+		 
+							 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Upload Logo</label>
 								<div class="col-sm-10">
@@ -366,23 +332,15 @@ $_SESSION['general_settings_msg'] = ""; ?>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">2 Story Unit Price</label>
+								<label class="col-sm-2 control-label">Gstin No</label>
 								<div class="col-sm-10">
 									<div class="col-sm-10 input-group">
-										<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-										<input type="text" class="form-control" placeholder="Enter ..." name="story2_unit_price" id="story2_unit_price" value="<?php echo $story2_unit_price[0][0]; ?>" data-validation-engine="validate[required,custom[number]]" />
+										 
+										<input type="text" class="form-control" placeholder="Enter ..." name="Gstin" id="Gstin" value="<?php echo $Gstin[0][0]; ?>" data-validation-engine="validate[required]" />
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">3 Story Unit Price</label>
-								<div class="col-sm-10">
-									<div class="col-sm-10 input-group">
-										<span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-										<input type="text" class="form-control" placeholder="Enter ..." name="story3_unit_price" id="story3_unit_price" value="<?php echo $story3_unit_price[0][0]; ?>" data-validation-engine="validate[required,custom[number]]" />
-									</div>
-								</div>
-							</div>
+ 
 						</div><!-- /.box-body -->
 						<div class="box-footer">
 							<button type="submit" class="btn btn-primary" name="submit" value="Submit">Submit</button>

@@ -5,6 +5,7 @@ $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'add';
 if ($_REQUEST['submit'] == 'Submit') {
 	$product_id=$_REQUEST['product_id'];
 	$style_no = $_REQUEST['style_no'];
+	$hsn = $_REQUEST['hsn'];
 	$category_id = $_REQUEST['category_id'];
 	 
 	$group_id = implode(',',$_REQUEST['group_id']); 
@@ -28,7 +29,7 @@ if ($_REQUEST['submit'] == 'Submit') {
 	$style_list_image='';
 }
 if ($_REQUEST['submit'] == 'Submit') {
-	$name_value = array('style_no' => rep($style_no), 'category_id' => rep($category_id), 'group_id' => rep($group_id),'size_id' => rep($size_id),'style_set_qty' => rep($style_set_qty),'style_mrp_for_size' => rep($style_mrp_for_size),'product_name'=> rep($product_name), 'style_decription' => rep($style_decription),   'style_color_qty'=>rep($style_color_qty));
+	$name_value = array('style_no' => rep($style_no), 'hsn' => rep($hsn), 'category_id' => rep($category_id), 'group_id' => rep($group_id),'size_id' => rep($size_id),'style_set_qty' => rep($style_set_qty),'style_mrp_for_size' => rep($style_mrp_for_size),'product_name'=> rep($product_name), 'style_decription' => rep($style_decription),   'style_color_qty'=>rep($style_color_qty));
 	// Product Add //
 	if ($action == "add") {
 		$Product->Product_add($name_value, "Product added successfully. Please enter another.", "Sorry, nothing is added.", "Sorry, email id is already added. Please use another email id.");
@@ -80,6 +81,13 @@ include "includes/header.php";
 								<label class="col-sm-2 control-label">Style NO</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="Enter ..." name="style_no" id="style_no"  data-validation-engine="validate[required]" value="<?php echo repc($Product_array[0]['style_no']); ?>" />
+								</div>
+							</div>
+
+														<div class="form-group">
+								<label class="col-sm-2 control-label">HSN NO</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" placeholder="Enter ..." name="hsn" id="hsn"  data-validation-engine="validate[required]" value="<?php echo repc($Product_array[0]['hsn']); ?>" />
 								</div>
 							</div>
  
