@@ -241,7 +241,7 @@ if ($i<22) {
               <td style="border:1px solid #999">&nbsp;</td>
               <td style="border:1px solid #999">&nbsp;</td>
               <td style="border:1px solid #999">&nbsp;</td>
-              <td style="border:1px solid #999;border-right:0" align="right"><strong> <?php echo amount_format_in($total); ?></strong></td>
+              <td style="border:1px solid #999;border-right:0" align="right"><strong> &#x20B9; <?php echo amount_format_in($total); ?></strong></td>
             </tr>
             <tr>
               <td colspan="7">Amount in words (Round) <br><strong style="font-size:14px;"><?php echo ucwords(convert_number_to_words($amount_incl_tax)); ?> Only</strong></td>
@@ -279,10 +279,10 @@ if ($i<22) {
               <?php for ($i = 0; $i <count($tax_row) ; $i++) {?>
               <tr>
                 <td><?php echo $tax_row[$i]['gst_rate'] ?>%</td>
-                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['txable']) ?> </td>
-                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['cgst_amt']) ?> </td>
-                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['sgst_amt']) ?> </td>
-                <td>&#8377; <?php echo amount_format_in($tax_row[$i]['igst_amt']) ?> </td>
+                <td>&#x20B9; <?php echo amount_format_in($tax_row[$i]['txable']) ?> </td>
+                <td>&#x20B9; <?php echo amount_format_in($tax_row[$i]['cgst_amt']) ?> </td>
+                <td>&#x20B9; <?php echo amount_format_in($tax_row[$i]['sgst_amt']) ?> </td>
+                <td>&#x20B9; <?php echo amount_format_in($tax_row[$i]['igst_amt']) ?> </td>
               </tr>
  <?php } ?>
  

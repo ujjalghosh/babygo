@@ -549,10 +549,10 @@ if ($page_name == 'manage_order.php') {
        "aTargets": [ 6 ] ,
        "mData": "download_link",
        "mRender": function ( data, type, full ) {
-        if(full[2]=='Inactive'){
-         var atbu='inactive';
-       }
-       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a> <a href="javascript:order_invoices('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Invoice"><i class="fa fa-money '+atbu+'"></i></a>  <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a> <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-fw fa-eye '+atbu+'"></i></a> <a href="javascript:close_order('+full[0]+',\''+full[2]+'\',\'manage_product_category.php\')" title="Close order"><i class="fa fa-fw fa-lightbulb-o '+atbu+'"></i></a> <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
+        if(full[5]=='Ordered'){
+         var atbu='active';
+       }else{var atbu='inactive';}
+       return '<a href="javascript:invoice_order('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="Add Invoice"><i class="fa fa-clone '+atbu+'"></i></a> <a href="javascript:order_invoices('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Invoice"><i class="fa fa-money '+atbu+'"></i></a>  <a href="add_order.php?order_id='+full[0]+'&action=edit" title="Edit"><i class="fa fa-fw fa-edit"></i></a> <a href="javascript:view_order_details('+full[0]+',\''+full[2]+'\',\'manage_order.php\')" title="View Details"><i class="fa fa-fw fa-eye '+atbu+'"></i></a> <a href="javascript:order_status('+full[0]+',\''+full[2]+'\',\''+full[5]+'\')" title="Change order status"><i class="fa fa-fw fa-lightbulb-o '+atbu+'"></i></a> <a href="javascript:del('+full[0]+',\'manage_order.php\',\'Order\')" title="Delete"><i class="fa fa-fw fa-close"></i></a>';
      }
    },
    {
@@ -565,26 +565,74 @@ if ($page_name == 'manage_order.php') {
  } );
 
 
-       $('#example tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-    } );
+
+
+order_invoices = function(aa, bb, cc){
+  jQuery('#order_invoices #invoices_row').empty();
+   $("#order_invoices").modal();
+
+   jQuery.ajax({
+  type: "POST",
+  url: "php/order_invoices.php",
+  data: {order_no: bb},
+  dataType: 'html',
+  }).done(function(row) {
+ jQuery('#order_invoices #invoices_row').html(row); 
+  });
+          
+   }
+
+order_status=function(aa, bb, cc){
+  jQuery('#order_status #frm_order_status')[0].reset();
+  jQuery('#frm_order_status #order_id').val(aa);
+  jQuery('#frm_order_status #order_no').val(bb);
+  jQuery('#frm_order_status .modal-title').html('Change order status of ' +bb );
+  $("#frm_order_status select").val(cc);
+    
+ $("#order_status").modal();
+
+}
+
+jQuery(document).on('submit','#frm_order_status',function(e){
+   e.preventDefault();
+
+var formData = new FormData(jQuery('#frm_order_status')[0]);
+$.ajax({
+type     : "POST",
+cache    : false,
+contentType: false,
+processData: false,
+url      : 'php/update_order_status.php',
+dataType : 'json',
+data     : formData,
+success  : function(data) {
+if (data.status==true) {
+//swal('success',  data.msg,  'success');
+jQuery('#order_invoice').modal('hide');
+var order_no=jQuery("#frm_order_status #order_no").val();
+var invoice_no = data.invoice_no;
  
-    // DataTable
-    var table = $('#example').DataTable();
- 
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
+jQuery("#frm_order_status")[0].reset();
+
+}
+if (data.status==false) {
+swal('Sorry',  data.msg,  'error');
+}
+
+},
+beforeSend: function(){ 
+jQuery(".invoice_save").attr("disabled", true);
+},
+complete: function(){
+jQuery(".invoice_save").attr("disabled", false);
+
+}
+});
+
+
+});
+
+
      <?php
 }
 
@@ -654,20 +702,7 @@ function status_update(aa, bb, cc) {
 }
 
 
-function order_invoices(aa, bb, cc){
-  jQuery('#order_invoices #invoices_row').empty();
-   $("#order_invoices").modal();
 
-   jQuery.ajax({
-  type: "POST",
-  url: "php/order_invoices.php",
-  data: {order_no: bb},
-  dataType: 'html',
-  }).done(function(row) {
- jQuery('#order_invoices #invoices_row').html(row); 
-  });
-          
-   }
 
 $(document).on('click','.print_inv',function(){
 var inv= $(this).attr("data-inv");

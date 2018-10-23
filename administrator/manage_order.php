@@ -61,6 +61,44 @@ $_SESSION['order_msg'] = ""; ?>
 <?php include "includes/footer.php";?>
 
 
+   <div class="modal fade" id="order_status" role="dialog">
+    <div class="modal-dialog modal-sm">
+    <form id="frm_order_status">
+    	<input type="hidden" name="order_id" id="order_id" value="">
+    	<input type="hidden" name="order_no" id="order_no" value="">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header modal-header-primary">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change order status</h4>
+        </div>
+        <div class="modal-body">
+				<div class="form-group">		
+		<div class="col-sm-12">
+			<select  class="form-control" name="order_status" id="order_status" >
+				<option value="Ordered">Ordered</option>
+				<option value="Delivered">Delivered</option> 
+				<option value="Close">Close</option>
+				
+			</select>
+		</div>
+	</div>
+       
+ 
+
+        </div>
+        <div class="modal-footer">
+        <button type="submit" class="btn btn-success order_status"  >Save</button>	
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
   <div class="modal fade" id="styles_pop" role="dialog">
     <div class="modal-dialog modal-lg">
     
