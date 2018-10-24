@@ -213,6 +213,18 @@ $page_name = basename($_SERVER['PHP_SELF']);
   
 </li>
 
+<li class="treeview <?php echo $page_name == 'product_stock.php'   ? 'active' : ''; ?>">
+  <a href="#">
+   <i class="fa fa-location-arrow"></i>
+   <span>Reports </span>
+   <i class="fa fa-angle-left pull-right"></i>
+ </a>
+<ul class="treeview-menu">
+ 
+   <li class="<?php echo $page_name == 'product_stock.php' ? 'active' : ''; ?>"><a href="product_stock.php"><i class="fa fa-circle-o"></i> Product stock</a></li>
+ </ul>
+  
+</li>
 
  
  
