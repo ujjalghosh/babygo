@@ -163,7 +163,7 @@ table.center_text tr td{text-align: center;}
               <td align="center" style="border-bottom:1px solid #999">UNIT</td>        
               <td align="center" width="9%" style="border-bottom:1px solid #999">MRP</td>
               <td align="center" style="border-bottom:1px solid #999">DISC</td>
-              <td align="center" style="border-bottom:1px solid #999">DN<br>AMT</td>
+              <td align="center" style="border-bottom:1px solid #999">DIS<br>AMT</td>
               <td align="center" style="border-bottom:1px solid #999">NET<br>RATE</td>
               <td align="center" width="12%" style="border-bottom:1px solid #999;border-right:0">Amount</td>
             </tr>
@@ -258,11 +258,11 @@ if ($i<22) {
       <tr>
         <td rowspan="2" valign="top" width="48%">
           <strong><u>Bank Details</u><br>
-          <strong>BANK :  </strong>  <br>
-          <strong>BRANCH :  </strong>  <br>
-          <strong>ACCOUNT NO :  </strong>  <br>
-          <strong>IFSC CODE :  </strong>  <br>
-          <strong>PAN NO :  </strong>  
+          <strong>BANK : ICICI BANK </strong>  <br>
+          <strong>BRANCH : GURUSADAY BRANCH </strong>  <br>
+          <strong>ACCOUNT NO : 129105000050 </strong>  <br>
+          <strong>IFSC CODE : ICIC0001291 </strong>  <br>
+          <strong>PAN NO : AACCG5839Q </strong>  
         </td>
         <td height="20" valign="top">Total Amount <span style="float: right;">Rs: <?php echo amount_format_in($amount_incl_tax); ?></span>  </td> 
       </tr>
@@ -301,18 +301,22 @@ if ($i<22) {
         <td colspan="3" style="padding:0;border-top:0">
           <table  width="100%" cellpadding="0" cellspacing="0">
             <tr>
-              <td width="35%" rowspan="4" align="left" style="vertical-align:bottom;padding-bottom:10px">
-                <span style="width:120px;display:inline-block">Buyer's VAT TIN</span>: <strong>1023456789</strong><br>
-                Deciaration<br>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+              <td width="35%" rowspan="4" align="left" style="vertical-align:top;padding-bottom:10px">
+                <span style="width:120px;display:inline-block"></span><strong> </strong><br>
+                Terms and Conditions:<br>
+                THIS AMOUNT IS PAYABLE IN FULL 30 DAYS FROM DATE OF ISSUE OF THIS INVOICE.
               </td>
-              <td width="35%">
-              Company's Bank Details<br>
-              <span style="width:108px;display:inline-block">Bank Name</span>:&nbsp;<strong>H.D.F.C BANK LTD</strong><br>
-              <span style="width:108px;display:inline-block">A/C No.</span>:&nbsp;<strong>10234567891</strong><br>
-              <span style="width:108px;display:inline-block">Branch & IFS Code</span>:&nbsp;<strong>G.C Avenue & HDFC0000382</strong>
+              <td width="35%" rowspan="4" align="left" style="vertical-align:top;padding-bottom:10px">
+                <span style="width:120px;display:inline-block"></span><strong> </strong><br>
+                 Factory:<br>
+                Regent Garment & Apparel Park, Barasat<br>Holding No. 63/1/1 Jessore Road, Ward No.1, Unit no. 301, 302, 303,304.<br>Block no. 9, 3rd Floor, PIN-700124
               </td>
               <td width="30%"></td>
+              <!--<td width="35%" rowspan="4" align="centre" style="vertical-align:top;padding-bottom:10px">-->
+              <!--  <span style="width:120px;display:inline-block"></span>Certified that the particulars given above are true and correct<br>-->
+              <!--  For GREEN ORBIT APPARELS PVT LTD<br><br><br><br><br>-->
+              <!--  Authorised Signatory-->
+              <!--</td>-->
             </tr>
 
 
